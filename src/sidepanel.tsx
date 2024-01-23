@@ -1,9 +1,14 @@
-import React from 'react';
-import {createRoot} from "react-dom/client";
+import React, { useCallback } from 'react';
+import { createRoot } from "react-dom/client";
+import { api } from './api';
 
 const Sidepanel = () => {
 
-    return <div>TSX Element</div>;
+    const handleClick = useCallback(() => {
+        const result = api.general.getGeneralInfo();
+    },[]);
+
+    return <div><button onClick={handleClick}>Test API</button> </div>;
 
 }
 
