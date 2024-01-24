@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
-    "generate-api": "swagger-typescript-api -p http://localhost:8080/v3/api-docs -o ./src/api -n generated.ts",
+    "generate-api": "swagger-typescript-api -p http://localhost:8080/api/v3/api-docs -o ./src/api -n generated.ts",
     "clean": "rimraf dist",
     "test": "npx jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\""

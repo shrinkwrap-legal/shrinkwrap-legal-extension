@@ -230,35 +230,58 @@ export class HttpClient<SecurityDataType = unknown> {
  * @baseUrl http://localhost:8080
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  hello = {
+  api = {
     /**
      * No description
      *
      * @tags shrinkwrap-controller
      * @name Hello
-     * @request GET:/hello
+     * @request GET:/api/hello
      */
     hello: (params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/hello`,
+        path: `/api/hello`,
         method: "GET",
         format: "json",
         ...params,
       }),
-  };
-  general = {
+
     /**
      * No description
      *
      * @tags shrinkwrap-controller
      * @name GetGeneralInfo
-     * @request GET:/general
+     * @request GET:/api/general
      */
     getGeneralInfo: (params: RequestParams = {}) =>
       this.request<GeneralDto, any>({
-        path: `/general`,
+        path: `/api/general`,
         method: "GET",
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags case-law-controller
+     * @name GetShrinkwrapDocument
+     * @request GET:/api/case-law/shrinkwrap
+     */
+    getShrinkwrapDocument: (
+      query: {
+        /**
+         * @minLength 0
+         * @maxLength 50
+         */
+        docNumber: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/case-law/shrinkwrap`,
+        method: "GET",
+        query: query,
         ...params,
       }),
   };
