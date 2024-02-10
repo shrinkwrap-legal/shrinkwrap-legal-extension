@@ -275,6 +275,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @maxLength 50
          */
         docNumber: string;
+        court: string;
       },
       params: RequestParams = {},
     ) =>

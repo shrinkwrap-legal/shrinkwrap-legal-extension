@@ -1,26 +1,30 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { createRoot } from "react-dom/client";
 import { api } from './api';
-import {Message} from "./types/sidepanel.types";
+import { Message } from "./types/sidepanel.types";
 
-const Sidepanel = () => {
-    const [docNumber,setDocNumber] = useState<string|undefined>(undefined);
+const SidePanel = () => {
+    const [risMessage,setRisMessage] = useState<Message|undefined>(undefined);
 
-    const handleClick = useCallback(() => {
-        if(docNumber) {
-            const result = api.api.getShrinkwrapDocument({ docNumber: docNumber});
+    const handleClick = useCallback(async () => {
+        if(risMessage) {
+            const result = await api.api.getShrinkwrapDocument({ docNumber: risMessage.docNumber, court: risMessage.court});
         }
-    },[docNumber]);
+    },[risMessage]);
 
-    chrome.runtime.onMessage.addListener((msg: Message, sender) => {
-        console.log("message received", msg, sender);
-        setDocNumber(msg.docNumber);
+    useEffect(() => {
+        chrome.runtime.onMessage.addListener((msg: Message, sender) => {
+            console.log("message received", msg, sender);
 
-    });
+            setRisMessage(msg);
+
+        });
+    }, []);
+
 
     return (
         <div>
-            <p>DocNumber: {docNumber}</p>
+            <p>DocNumber: {risMessage?.docNumber ?? ''}</p>
             <div>
                 <button onClick={handleClick}>Zusammenfassung erstellen</button>
             </div>
@@ -32,6 +36,6 @@ const root = createRoot(document.getElementById("root")!);
 
 root.render(
     <React.StrictMode>
-        <Sidepanel />
+        <SidePanel />
     </React.StrictMode>
 );

@@ -21,6 +21,5 @@ const num = document
 
 if(num) {
   const docId = num.getElementsByTagName("a")?.item(0)?.textContent;
-  chrome.runtime.sendMessage({docNumber: docId })
-
+  chrome.runtime.sendMessage({docNumber: docId, court: '' })
 }
