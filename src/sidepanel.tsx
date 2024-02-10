@@ -25,6 +25,7 @@ const SidePanel = () => {
     return (
         <div>
             <p>DocNumber: {risMessage?.docNumber ?? ''}</p>
+            <p>Gericht/Abfrage: {risMessage?.court ?? ''}</p>
             <div>
                 <button onClick={handleClick}>Zusammenfassung erstellen</button>
             </div>
