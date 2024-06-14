@@ -264,6 +264,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags spring-chat-client-controller
+     * @name Generation
+     * @request GET:/api/client
+     */
+    generation: (
+      query: {
+        question: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<string, any>({
+        path: `/api/client`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags case-law-controller
      * @name GetShrinkwrapDocument
      * @request GET:/api/case-law/shrinkwrap
@@ -281,6 +302,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<void, any>({
         path: `/api/case-law/shrinkwrap`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags case-law-controller
+     * @name GetCaselawOverview
+     * @request GET:/api/case-law/overview
+     */
+    getCaselawOverview: (
+      query: {
+        docNumber: string;
+        court: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/case-law/overview`,
         method: "GET",
         query: query,
         ...params,

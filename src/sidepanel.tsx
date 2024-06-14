@@ -8,7 +8,7 @@ const SidePanel = () => {
 
     const handleClick = useCallback(async () => {
         if(risMessage) {
-            const result = await api.api.getShrinkwrapDocument({ docNumber: risMessage.docNumber, court: risMessage.court});
+            const result = await api.getShrinkwrapDocument({ docNumber: risMessage.docNumber, court: risMessage.court});
         }
     },[risMessage]);
 

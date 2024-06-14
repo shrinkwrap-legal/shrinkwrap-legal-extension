@@ -1,4 +1,4 @@
 import { Api } from "./generated";
 
 
-export const api = new Api();
+export const api = (new Api()).api;

@@ -1,3 +1,4 @@
+import {api} from "./api";
 
 function runShrinkwrapTasks() {
 
@@ -39,6 +40,13 @@ function runShrinkwrapTasks() {
       const court = urlParams.get('Abfrage');
       const docNumber = urlParams.get('Dokumentnummer');
       elem.element.innerHTML += ` <br><span style="color:gray">(${court}, ${docNumber})</span>`
+
+      api.getCaselawOverview({
+        docNumber: docNumber!,
+        court: court!
+      }).then((res) => {
+        console.log("fetched " + res.status);
+      })
     })
   }
 
