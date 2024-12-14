@@ -14,6 +14,12 @@ export interface GeneralDto {
   version?: string;
 }
 
+export interface CaseLawResponseDto {
+  metadata?: Record<string, string>;
+  /** @format int32 */
+  wordCount?: number;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -234,6 +240,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags spring-chat-client-controller
+     * @name InfoPdf
+     * @request GET:/api/pdf
+     */
+    infoPdf: (
+      query: {
+        question: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<string, any>({
+        path: `/api/pdf`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags shrinkwrap-controller
      * @name Hello
      * @request GET:/api/hello
@@ -290,20 +317,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/case-law/shrinkwrap
      */
     getShrinkwrapDocument: (
-      query: {
+      query?: {
+        /**
+         * @minLength 1
+         * @maxLength 100
+         */
+        ecli?: string;
         /**
          * @minLength 0
          * @maxLength 50
          */
-        docNumber: string;
-        court: string;
+        docNumber?: string;
+        court?: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<CaseLawResponseDto, any>({
         path: `/api/case-law/shrinkwrap`,
         method: "GET",
         query: query,
+        format: "json",
         ...params,
       }),
 

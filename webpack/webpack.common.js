@@ -14,15 +14,34 @@ module.exports = {
     output: {
         path: path.join(__dirname, "../dist/js"),
         filename: "[name].js",
+        clean: true,
     },
     optimization: {
+        chunkIds: 'named',
+        moduleIds: 'named',
         splitChunks: {
-            name: "vendor",
-            chunks(chunk) {
-              return chunk.name !== 'background';
-            }
+            cacheGroups: {
+                default: false,
+                defaultVendors: false,
+            },
+            chunks: "async",
         },
-    },
+        /*
+        splitChunks: {
+name: 'vendor',
+
+            cacheGroups: {
+                vendor: {
+
+                }
+            },
+            chunks(chunk) {
+                return chunk.name !== 'background';
+            },
+
+             */
+        },
+
     module: {
         rules: [
             {

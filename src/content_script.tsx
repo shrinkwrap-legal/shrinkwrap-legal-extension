@@ -3,7 +3,7 @@ import {api} from "./api";
 function runShrinkwrapTasks() {
 
 
-
+// MainContent_DocumentRepeater_JustizDocumentData_0_EcliContainer_0
   //determine page: search page, document result page
 
   if (window.location.pathname === "/Dokument.wxe") {
