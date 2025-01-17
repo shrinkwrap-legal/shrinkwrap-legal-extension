@@ -16,6 +16,7 @@ module.exports = {
         filename: "[name].js",
         clean: true,
     },
+    // https://v4.webpack.js.org/plugins/split-chunks-plugin/
     optimization: {
         chunkIds: 'named',
         moduleIds: 'named',
@@ -49,6 +50,38 @@ name: 'vendor',
                 use: "ts-loader",
                 exclude: /node_modules/,
             },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    {
+                        loader: "style-loader",
+                    },
+                    {
+                        loader: "css-loader", // Takes the CSS files and returns the CSS with imports and url(...) for Webpack
+                        options: {
+                            sourceMap: process.env.NODE_ENV === "development",
+                        },
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        "autoprefixer",
+                                        {
+                                            // Options
+                                        },
+                                    ],
+                                ],
+                            },
+                        },
+                    },
+                    "resolve-url-loader", // Rewrites relative paths in url() statements
+                    "sass-loader", // Takes the Sass/SCSS file and compiles to the CSS
+                ],
+            },
+
         ],
     },
     resolve: {

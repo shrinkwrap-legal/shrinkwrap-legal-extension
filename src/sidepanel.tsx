@@ -1,7 +1,10 @@
+import './styles/shrinkwrap.scss';
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { createRoot } from "react-dom/client";
 import { api } from './api';
 import { Message } from "./types/sidepanel.types";
+import {Button} from "react-bootstrap";
 
 const SidePanel = () => {
     const [risMessage,setRisMessage] = useState<Message|undefined>(undefined);
@@ -9,6 +12,8 @@ const SidePanel = () => {
     const handleClick = useCallback(async () => {
         if(risMessage) {
             const result = await api.getShrinkwrapDocument({ docNumber: risMessage.docNumber, court: risMessage.court});
+        } {
+
         }
     },[risMessage]);
 
@@ -25,9 +30,10 @@ const SidePanel = () => {
     return (
         <div>
             <p>DocNumber: {risMessage?.docNumber ?? ''}</p>
+            <p>ECLI: {risMessage?.ecli ?? ''}</p>
             <p>Gericht/Abfrage: {risMessage?.court ?? ''}</p>
             <div>
-                <button onClick={handleClick}>Zusammenfassung erstellen</button>
+                <Button onClick={handleClick}>Zusammenfassung erstellen</Button>
             </div>
         </div>);
 }
