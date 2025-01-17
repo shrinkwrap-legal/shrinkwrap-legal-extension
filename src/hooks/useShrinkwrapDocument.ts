@@ -1,12 +1,14 @@
-import {useQuery} from "react-query";
+
 import {api} from "../api";
 import {Message} from "../types/sidepanel.types";
+import {useQuery} from "@tanstack/react-query";
 
 
 export function useShrinkwrapDocument(message: Message | undefined) {
     return useQuery({
         queryKey: ['useShrinkwrapDocument'],
         queryFn: async () => {
+            console.log('useShrinkwrapDocument', message);
             if(message) {
                 const response =
                     await api.getShrinkwrapDocument({
@@ -19,6 +21,7 @@ export function useShrinkwrapDocument(message: Message | undefined) {
                 }
                 throw response.error;
             }
-        }
-    }, );
+        },
+        enabled: false,
+    },  );
 }

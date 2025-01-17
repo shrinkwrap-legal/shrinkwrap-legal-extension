@@ -2,12 +2,10 @@ import './styles/shrinkwrap.scss';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { createRoot } from "react-dom/client";
-import { api } from './api';
 import { Message } from "./types/sidepanel.types";
-import {Button} from "react-bootstrap";
-import {QueryClient, QueryClientProvider} from "react-query";
 import {useShrinkwrapDocument} from "./hooks/useShrinkwrapDocument";
 import {LoadingButton} from "./components/LoadingButton";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const SidePanel = () => {
     const [risMessage,setRisMessage] = useState<Message|undefined>(undefined);
@@ -38,7 +36,6 @@ const SidePanel = () => {
             <p>ECLI: {risMessage?.ecli ?? ''}</p>
             <p>Gericht/Abfrage: {risMessage?.court ?? ''}</p>
             <div>
-                Loading: {JSON.stringify(isFetching)}
                 <LoadingButton isLoading={isFetching} onClick={handleClick}>Zusammenfassung erstellen</LoadingButton>
             </div>
             {data &&

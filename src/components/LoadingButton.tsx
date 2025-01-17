@@ -8,7 +8,6 @@ export type LoadingButtonProps = {
     onClick?: () => void;
 }
 export function LoadingButton({ isLoading, onClick, children }: PropsWithChildren<LoadingButtonProps>) {
-    const onClickHandler = isLoading ? onClick : undefined;
-    return <Button onClick={onClickHandler} disabled={isLoading}>{isLoading ? 'Loading...' : children}</Button>
+    return <Button onClick={onClick} disabled={isLoading}>{isLoading ? 'Loading...' : children}</Button>
 
 }
