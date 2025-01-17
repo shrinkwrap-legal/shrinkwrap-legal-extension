@@ -1,4 +1,3 @@
-
 function polling() {
   // console.log("polling");
   setTimeout(polling, 1000 * 30);
@@ -6,7 +5,6 @@ function polling() {
 
 polling();
 
-
 chrome.sidePanel
-    .setPanelBehavior({ openPanelOnActionClick: true})
-    .catch((error) => console.error(error));
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
