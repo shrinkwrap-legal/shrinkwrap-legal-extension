@@ -1,10 +1,18 @@
 import {api} from "./api";
 
+
+function getEcliFromContent(): string | null | undefined {
+  const ecliContainer = window.document.getElementById("MainContent_DocumentRepeater_JustizDocumentData_0_EcliContainer_0");
+  if(ecliContainer) {
+    return ecliContainer.lastChild?.textContent;
+  }
+  return null;
+}
+
 function runShrinkwrapTasks() {
 
 
-// MainContent_DocumentRepeater_JustizDocumentData_0_EcliContainer_0
-  //determine page: search page, document result page
+  const ecli = getEcliFromContent();
 
   if (window.location.pathname === "/Dokument.wxe") {
     console.log("hello RIS, it's shrinkwrap extracting doc info");
@@ -18,7 +26,7 @@ function runShrinkwrapTasks() {
     console.log(`document ${docNumber} by court ${court}`)
 
     if(court && docNumber) {
-      chrome.runtime.sendMessage({docNumber: docNumber, court: court })
+      chrome.runtime.sendMessage({docNumber: docNumber, court: court, ecli: ecli?.trim() });
     }
   }
   else if (window.location.pathname === "/Ergebnis.wxe") {
