@@ -50,17 +50,22 @@ function runShrinkwrapTasks() {
     elements.forEach((elem) => {
       const url = new URL(elem.href, window.location.origin);
       const urlParams = new URLSearchParams(url.searchParams);
-      const court = urlParams.get("Abfrage");
+      let court = urlParams.get("Abfrage");
+
+      //court has to be correct casing
+      const allowedCourts = ["Justiz", "VwGH", "VfGH", "BVwG", "LVwG", "DSB", "GBK"];
+      court = allowedCourts.filter(c => c.toLowerCase() == court?.toLowerCase())[0]
+
       const docNumber = urlParams.get("Dokumentnummer");
-      elem.element.innerHTML += ` <br><span style="color:gray">(${court}, ${docNumber})</span>`;
 
       api
-        .getCaselawOverview({
+        .getShrinkwrapDocument({
           docNumber: docNumber!,
           court: court!,
         })
         .then((res) => {
-          console.log("fetched " + res.status);
+          elem.element.innerHTML += ` <br><span style="color:gray">(${res.data.wordCount} Wörter)</span>`;
+
         });
     });
   }
