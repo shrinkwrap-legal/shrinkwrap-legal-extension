@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const SidePanel = () => {
   const [risMessage, setRisMessage] = useState<Message | undefined>(undefined);
 
-  const { refetch: loadDocument, data, isFetching } = useShrinkwrapDocument(risMessage);
+  const { refetch: loadDocument, data, error, isFetching } = useShrinkwrapDocument(risMessage);
 
   const handleClick = useCallback(async () => {
       await loadDocument();
@@ -34,11 +34,16 @@ const SidePanel = () => {
           Zusammenfassung erstellen
         </LoadingButton>
       </div>
-      {data && (
-        <div>
-          <p>Anzahl Wörter: {data.wordCount}</p>
-        </div>
-      )}
+        {error ? <div>Uups, es ist mir leider ein Fehler passiert.</div>
+            : data &&
+            <div>
+                <p>Anzahl Wörter: {data.wordCount}</p>
+                <p>Ausgang: {data.summary?.ausgang}</p>
+                <p>Boulevard: {data.summary?.zeitungstitel_boulevard}</p>
+                <p>Öffentlichkeit: {data.summary?.zeitungstitel_oeffentlich}</p>
+                <p>Rechtszeitschrift: {data.summary?.zeitungstitel_rechtszeitschrift}</p>
+            </div>
+        }
     </div>
   );
 };
