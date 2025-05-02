@@ -4,6 +4,7 @@
 $theme-colors: map-merge($theme-colors, (
         "primary": #00415d,
         "secondary": #74d4d5,
+        "shrinkwrap": #e5e5e5,
 ));
 
 @import 'bootstrap/scss/bootstrap.scss';
@@ -11,4 +12,5 @@ $theme-colors: map-merge($theme-colors, (
 
 .sw-sidepanel {
   padding: 8pt;
+  background-color: #e5e5e5;
 }

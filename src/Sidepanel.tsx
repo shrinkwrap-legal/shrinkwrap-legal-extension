@@ -26,29 +26,59 @@ const SidePanel = () => {
 
   return (
     <div>
-      <p>DocNumber: {risMessage?.docNumber ?? ""}</p>
-      <p>ECLI: {risMessage?.ecli ?? ""}</p>
-      <p>Gericht/Abfrage: {risMessage?.court ?? ""}</p>
-      <div>
+        <div className="card mb-3">
+            <div className="card-body">
+                <h5 className="card-title bg-secondary">RIS Dokument</h5>
+                <p>DocNumber: {risMessage?.docNumber ?? ""}</p>
+                <p>ECLI: {risMessage?.ecli ?? ""}</p>
+                <p>Gericht/Abfrage: {risMessage?.court ?? ""}</p>
+            </div>
+        </div>
+
+      <div className="mb-3">
         <LoadingButton isLoading={isFetching} onClick={handleClick}>
-          Zusammenfassung erstellen
+          Ergebnis generieren
         </LoadingButton>
       </div>
         {error ? <div>Uups, es ist mir leider ein Fehler passiert.</div>
             : data &&
             <div>
-                <p>Anzahl Wörter: {data.wordCount}</p>
-                <p>Ausgang: {data.summary?.ausgang}</p>
-                <p>Boulevard: {data.summary?.zeitungstitel_boulevard}</p>
-                <p>Öffentlichkeit: {data.summary?.zeitungstitel_oeffentlich}</p>
-                <p>Rechtszeitschrift: {data.summary?.zeitungstitel_rechtszeitschrift}</p>
+
+                <div className="card mb-3">
+                    <div className="card-body">
+                        <h5 className="card-title  bg-secondary">{data.summary?.zeitungstitel_boulevard}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">{data.summary?.zeitungstitel_oeffentlich}</h6>
+                        <p className="card-text">{data.summary?.zeitungstitel_rechtszeitschrift}</p>
+                    </div>
+                </div>
+                <div className="card mb-3">
+                    <div className="card-body">
+                        <h5 className="card-title">Metadaten</h5>
+                        <div className="list-group">
+                            <div className="list-group-item">
+                                Ausgang: {data.summary?.ausgang}
+                            </div>
+                            <div className={"list-group-item"}>
+                                Anzahl Wörter: {data.wordCount}
+                            </div>
+                            <div className={"list-group-item"}>
+                                Sachverhalt: {data.summary?.sachverhalt}
+                            </div>
+                            <div className={"list-group-item"}>
+                                Rechtsmittel: {data.summary?.rechtsmittel}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         }
     </div>
   );
 };
 
-const root = createRoot(document.getElementById("root")!);
+                    const root = createRoot(document.getElementById("root")!);
 
 const queryClient = new QueryClient();
 root.render(
