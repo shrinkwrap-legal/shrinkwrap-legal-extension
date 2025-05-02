@@ -1,4 +1,4 @@
-import { api } from "./api";
+import {api, GetShrinkwrapDocumentParamsCourtEnum} from "./api";
 
 function getEcliFromContent(): string | null | undefined {
   const ecliContainer = window.document.getElementById(
@@ -61,10 +61,10 @@ function runShrinkwrapTasks() {
       api
         .getShrinkwrapDocument({
           docNumber: docNumber!,
-          court: court!,
+          court: court! as GetShrinkwrapDocumentParamsCourtEnum,
         })
         .then((res) => {
-          elem.element.innerHTML += ` <br><span style="color:gray">(${res.data.wordCount} Wörter)</span>`;
+          elem.element.innerHTML += ` <br><span style="color:gray">(${res.data.wordCount} Wörter; Boulevard: res.data.zeitungstitel_boulevard) </span>`;
 
         });
     });

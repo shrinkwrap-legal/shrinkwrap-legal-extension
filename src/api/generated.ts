@@ -1,5 +1,6 @@
 /* eslint-disable */
 /* tslint:disable */
+// @ts-nocheck
 /*
  * ---------------------------------------------------------------
  * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
@@ -15,10 +16,40 @@ export interface GeneralDto {
 }
 
 export interface CaseLawResponseDto {
-  metadata?: Record<string, string>;
+  summaryType?: string;
   /** @format int32 */
+  analysisVersion?: number;
+  summary?: CaselawSummaryCivilCase;
+  /** @format int64 */
   wordCount?: number;
 }
+
+export interface CaselawSummaryCivilCase {
+  art: string;
+  ausgang?: string;
+  rechtsmittel?: string;
+  sachverhalt?: string;
+  begehren?: string;
+  gegenvorbringen?: string;
+  zusammenfassung_3_absaetze?: string[];
+  zusammenfassung_3_saetze?: string;
+  zeitungstitel_boulevard?: string;
+  zeitungstitel_oeffentlich?: string;
+  zeitungstitel_rechtszeitschrift?: string;
+  schlussfolgerungen?: string[];
+  wichtige_normen?: string[];
+  hauptrechtsgebiete?: string[];
+  unterrechtsgebiete?: string[];
+}
+
+export type GetShrinkwrapDocumentParamsCourtEnum =
+  | "Justiz"
+  | "VwGH"
+  | "VfGH"
+  | "BVwG"
+  | "LVwG"
+  | "DSB"
+  | "GBK";
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
@@ -72,7 +103,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = process.env.API_BASE_URL || "http://localhost:8080";
+  public baseUrl: string = "http://localhost:8080";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
@@ -234,7 +265,7 @@ export class HttpClient<SecurityDataType = unknown> {
             : payloadFormatter(body),
       },
     ).then(async (response) => {
-      const r = response as HttpResponse<T, E>;
+      const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
       r.error = null as unknown as E;
 
@@ -290,7 +321,6 @@ export class Api<
         path: `/api/pdf`,
         method: "GET",
         query: query,
-        format: "json",
         ...params,
       }),
 
@@ -305,7 +335,6 @@ export class Api<
       this.request<string, any>({
         path: `/api/hello`,
         method: "GET",
-        format: "json",
         ...params,
       }),
 
@@ -320,7 +349,6 @@ export class Api<
       this.request<GeneralDto, any>({
         path: `/api/general`,
         method: "GET",
-        format: "json",
         ...params,
       }),
 
@@ -341,7 +369,6 @@ export class Api<
         path: `/api/client`,
         method: "GET",
         query: query,
-        format: "json",
         ...params,
       }),
 
@@ -364,7 +391,7 @@ export class Api<
          * @maxLength 50
          */
         docNumber?: string;
-        court?: string;
+        court?: GetShrinkwrapDocumentParamsCourtEnum;
       },
       params: RequestParams = {},
     ) =>
@@ -372,7 +399,6 @@ export class Api<
         path: `/api/case-law/shrinkwrap`,
         method: "GET",
         query: query,
-        format: "json",
         ...params,
       }),
 

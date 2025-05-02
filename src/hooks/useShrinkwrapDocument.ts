@@ -1,4 +1,4 @@
-import { api } from "../api";
+import {api, GetShrinkwrapDocumentParamsCourtEnum} from "../api";
 import { Message } from "../types/sidepanel.types";
 import { useQuery } from "@tanstack/react-query";
 
@@ -10,7 +10,7 @@ export function useShrinkwrapDocument(message: Message | undefined) {
       if (message) {
         const response = await api.getShrinkwrapDocument({
           docNumber: message.docNumber,
-          court: message.court,
+          court: message.court as GetShrinkwrapDocumentParamsCourtEnum,
           ecli: message.ecli,
         });
         if (response.ok) {
