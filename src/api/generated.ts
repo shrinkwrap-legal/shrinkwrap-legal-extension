@@ -349,6 +349,7 @@ export class Api<
       this.request<GeneralDto, any>({
         path: `/api/general`,
         method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -399,6 +400,7 @@ export class Api<
         path: `/api/case-law/shrinkwrap`,
         method: "GET",
         query: query,
+        format: "json",
         ...params,
       }),
 

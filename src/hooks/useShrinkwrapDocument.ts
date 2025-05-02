@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useShrinkwrapDocument(message: Message | undefined) {
   return useQuery({
-    queryKey: ["useShrinkwrapDocument"],
+    queryKey: ["useShrinkwrapDocument", message],
     queryFn: async () => {
       console.log("useShrinkwrapDocument", message);
       if (message) {

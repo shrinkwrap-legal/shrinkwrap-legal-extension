@@ -64,7 +64,7 @@ function runShrinkwrapTasks() {
           court: court! as GetShrinkwrapDocumentParamsCourtEnum,
         })
         .then((res) => {
-          elem.element.innerHTML += ` <br><span style="color:gray">(${res.data.wordCount} Wörter; Boulevard: res.data.zeitungstitel_boulevard) </span>`;
+          elem.element.innerHTML += ` <br><span style="color:gray">(${res.data.wordCount} Wörter; Boulevard: ${res.data.summary?.zeitungstitel_boulevard}) </span>`;
 
         });
     });
