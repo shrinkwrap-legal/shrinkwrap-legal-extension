@@ -64,8 +64,16 @@ function runShrinkwrapTasks() {
           court: court! as GetShrinkwrapDocumentParamsCourtEnum,
         })
         .then((res) => {
-          elem.element.innerHTML += ` <br><span style="color:gray">(${res.data.wordCount} Wörter; Boulevard: ${res.data.summary?.zeitungstitel_boulevard}) </span>`;
-
+          //try adding a new line above the element
+          let tableRow = elem?.element?.parentElement?.parentElement;
+          if (tableRow) {
+            let newRow = document.createElement("tr");
+            newRow.classList.add(...tableRow.classList)
+            let wordInfo = `<span style="color:gray">(${res.data.wordCount} Wörter)</span>`;
+            let title = `<span>${res.data.summary?.zeitungstitel_boulevard || ''}</span>`
+            newRow.innerHTML = `<td style="padding-left: 10px" colspan="8" class="bocListDataCell">${wordInfo} ${title}</td>`;
+            tableRow.before(newRow);
+          }
         });
     });
   }
