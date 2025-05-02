@@ -1,0 +1,28 @@
+$font-family-sans-serif:      system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+
+.shrinkwrapRow {
+  font-family: $font-family-sans-serif;
+  padding: 4px;
+
+  .shrinkwrapTitle {
+    cursor: pointer;
+  }
+
+  &.showSummary .shrinkwrapTitle {
+    font-weight: 600;
+  }
+
+  &.showSummary div.shrinkwrapSummary {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  div.shrinkwrapSummary {
+    display: none;
+  }
+}
+
+
+

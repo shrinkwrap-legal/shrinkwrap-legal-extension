@@ -1,4 +1,5 @@
 import {api, GetShrinkwrapDocumentParamsCourtEnum} from "./api";
+import "./styles/content.scss";
 
 function getEcliFromContent(): string | null | undefined {
   const ecliContainer = window.document.getElementById(
@@ -69,9 +70,14 @@ function runShrinkwrapTasks() {
           if (tableRow) {
             let newRow = document.createElement("tr");
             newRow.classList.add(...tableRow.classList)
+            newRow.classList.add("shrinkwrapRow")
             let wordInfo = `<span style="color:gray">(${res.data.wordCount} Wörter)</span>`;
-            let title = `<span>${res.data.summary?.zeitungstitel_boulevard || ''}</span>`
-            newRow.innerHTML = `<td style="padding-left: 10px" colspan="8" class="bocListDataCell">${wordInfo} ${title}</td>`;
+            let title = `<span class="shrinkwrapTitle">${res.data.summary?.zeitungstitel_boulevard || ''}</span>`
+            let shortSummary = `<div class="shrinkwrapSummary">${res.data.summary?.zusammenfassung_3_saetze || ''}</div>`
+            newRow.innerHTML = `<td colspan="8" class="bocListDataCell">${wordInfo} ${title} ${shortSummary}</td>`;
+            newRow.onclick = (e) => {
+              newRow.classList.toggle("showSummary")
+            }
             tableRow.before(newRow);
           }
         });
