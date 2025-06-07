@@ -1,6 +1,6 @@
-import {api, GetShrinkwrapDocumentParamsCourtEnum} from "./api";
+import {api, CaseLawResponseDto, GetShrinkwrapDocumentParamsCourtEnum} from "./api";
 import "./styles/content.scss";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {createRoot} from "react-dom/client";
 
 function getEcliFromContent(): string | null | undefined {
@@ -14,23 +14,46 @@ function getEcliFromContent(): string | null | undefined {
 }
 
 interface ShrinkwrapRowProps {
-  wordCount?: number;
-  title: string;
-  summary: string;
+  court: string;
+  docNumber: string;
 }
 
-const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({wordCount, title, summary}) => {
+const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber}) => {
   const [showSummary, setShowSummary] = useState(false);
+  const [isFetching, setIsFetching] = useState(false)
+  const [caseData, setCaseData] = useState<CaseLawResponseDto | null>(null)
+
+  useEffect(() => {
+    setIsFetching(true);
+    fetchData().then(() => {
+      setIsFetching(false)
+    })
+  },[docNumber,court])
+
+  const fetchData = async () => {
+    try {
+      let response = await api
+          .getShrinkwrapDocument({
+            docNumber: docNumber!,
+            court: court! as GetShrinkwrapDocumentParamsCourtEnum,
+          });
+      setCaseData(response.data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
+      isFetching && (<td colSpan={8} className={'shrinkwrapLoading'}></td>) ||
+      caseData && (
       <td colSpan={8} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
           onClick={() => setShowSummary(s => !s)}>
-        <span style={{color: 'grey'}}>({wordCount} Wörter)</span>&ensp;
-        <span className="shrinkwrapTitle">{title}</span>
+        <span style={{color: 'grey'}}>({caseData.wordCount} Wörter)</span>&ensp;
+        <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_boulevard}</span>
         {showSummary && (
-            <div className="shrinkwrapSummary">{summary}</div>
+            <div className="shrinkwrapSummary">{caseData.summary?.zusammenfassung_3_saetze}</div>
         )}
-      </td>
-
+      </td>)
   );
 };
 
@@ -83,27 +106,18 @@ function runShrinkwrapTasks() {
 
       const docNumber = urlParams.get("Dokumentnummer");
 
-      api
-        .getShrinkwrapDocument({
-          docNumber: docNumber!,
-          court: court! as GetShrinkwrapDocumentParamsCourtEnum,
-        })
-        .then((res) => {
-          //try adding a new line above the element
-          let tableRow = elem?.element?.parentElement?.parentElement;
-          if (tableRow) {
-            let newRow = document.createElement("tr");
-            newRow.classList.add(...tableRow.classList)
+      let tableRow = elem?.element?.parentElement?.parentElement;
+      if (tableRow && docNumber != null) {
+        let newRow = document.createElement("tr");
+        newRow.classList.add(...tableRow.classList)
 
-            const root = createRoot(newRow);
-            root.render(<ShrinkwrapRow
-                wordCount={res.data.wordCount}
-                title={res.data.summary?.zeitungstitel_boulevard || ''}
-                summary={res.data.summary?.zusammenfassung_3_saetze || ''}
-            />);
-            tableRow.before(newRow);
-          }
-        });
+        const root = createRoot(newRow);
+        root.render(<ShrinkwrapRow
+            docNumber={docNumber}
+            court={court}
+        />);
+        tableRow.before(newRow);
+      }
     });
   }
 }
