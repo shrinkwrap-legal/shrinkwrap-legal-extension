@@ -25,4 +25,37 @@ $font-family-sans-serif:      system-ui, -apple-system, "Segoe UI", Roboto, "Hel
 }
 
 
+.indeterminate-progress-bar {
+  background-color: #d1d5db;
+  /* Size */
+  height: 2px;
 
+  position: relative;
+  width: 100%;
+}
+
+.indeterminate-progress-bar__progress {
+  /* Color */
+  background-color: #67BCBD;
+
+
+  /* Absolute position */
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 50%;
+
+  /* Move the bar infinitely */
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: indeterminate-progress-bar;
+}
+
+@keyframes indeterminate-progress-bar {
+  from {
+    left: -50%;
+  }
+  to {
+    left: 100%;
+  }
+}

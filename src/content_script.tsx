@@ -44,7 +44,8 @@ const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber}) => {
   }
 
   return (
-      isFetching && (<td colSpan={8} className={'shrinkwrapLoading'}></td>) ||
+      isFetching && (<td colSpan={8} className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
+        <div className="indeterminate-progress-bar__progress"></div></div></td>) ||
       caseData && (
       <td colSpan={8} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
           onClick={() => setShowSummary(s => !s)}>
