@@ -1,5 +1,7 @@
 import {api, GetShrinkwrapDocumentParamsCourtEnum} from "./api";
 import "./styles/content.scss";
+import React, {useState} from "react";
+import {createRoot} from "react-dom/client";
 
 function getEcliFromContent(): string | null | undefined {
   const ecliContainer = window.document.getElementById(
@@ -10,6 +12,28 @@ function getEcliFromContent(): string | null | undefined {
   }
   return null;
 }
+
+interface ShrinkwrapRowProps {
+  wordCount?: number;
+  title: string;
+  summary: string;
+}
+
+const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({wordCount, title, summary}) => {
+  const [showSummary, setShowSummary] = useState(false);
+  return (
+      <td colSpan={8} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
+          onClick={() => setShowSummary(s => !s)}>
+        <span style={{color: 'grey'}}>({wordCount} Wörter)</span>&ensp;
+        <span className="shrinkwrapTitle">{title}</span>
+        {showSummary && (
+            <div className="shrinkwrapSummary">{summary}</div>
+        )}
+      </td>
+
+  );
+};
+
 
 function runShrinkwrapTasks() {
   const ecli = getEcliFromContent();
@@ -70,14 +94,13 @@ function runShrinkwrapTasks() {
           if (tableRow) {
             let newRow = document.createElement("tr");
             newRow.classList.add(...tableRow.classList)
-            newRow.classList.add("shrinkwrapRow")
-            let wordInfo = `<span style="color:gray">(${res.data.wordCount} Wörter)</span>`;
-            let title = `<span class="shrinkwrapTitle">${res.data.summary?.zeitungstitel_boulevard || ''}</span>`
-            let shortSummary = `<div class="shrinkwrapSummary">${res.data.summary?.zusammenfassung_3_saetze || ''}</div>`
-            newRow.innerHTML = `<td colspan="8" class="bocListDataCell">${wordInfo} ${title} ${shortSummary}</td>`;
-            newRow.onclick = (e) => {
-              newRow.classList.toggle("showSummary")
-            }
+
+            const root = createRoot(newRow);
+            root.render(<ShrinkwrapRow
+                wordCount={res.data.wordCount}
+                title={res.data.summary?.zeitungstitel_boulevard || ''}
+                summary={res.data.summary?.zusammenfassung_3_saetze || ''}
+            />);
             tableRow.before(newRow);
           }
         });
