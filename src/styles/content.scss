@@ -31,6 +31,7 @@ $font-family-sans-serif:      system-ui, -apple-system, "Segoe UI", Roboto, "Hel
   height: 2px;
 
   position: relative;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -58,4 +59,21 @@ $font-family-sans-serif:      system-ui, -apple-system, "Segoe UI", Roboto, "Hel
   to {
     left: 100%;
   }
+}
+
+/* analysis */
+.shrinkwrapAnalysisBlock {
+  position: relative;
+  background-color: #fcffff;
+  border: 1px solid #67BCBD;
+  margin-top: 0.5em;
+
+
+  .shrinkwrapAnalysis {
+    padding: 0.5em;
+  }
+
+
+
+
 }

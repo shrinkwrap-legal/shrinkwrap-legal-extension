@@ -6,3 +6,9 @@ export function capitalize(str: string): string {
 export function reverse(str: string): string {
   return str.split('').reverse().join('');
 }
+
+export function harmonizeCourtCasing(str: string | null): string {
+  const allowedCourts = ["Justiz", "VwGH", "VfGH", "BVwG", "LVwG", "DSB", "GBK"];
+  let court = allowedCourts.filter(c => c.toLowerCase() == str?.toLowerCase())[0];
+  return court;
+}

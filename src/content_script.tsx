@@ -3,6 +3,8 @@ import "./styles/content.scss";
 import React, {useEffect, useState} from "react";
 import {createRoot} from "react-dom/client";
 import {ShrinkwrapRow} from "./components/ShrinkwrapRisResultRow";
+import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
+import {harmonizeCourtCasing} from "./utils/string-utils";
 
 function getEcliFromContent(): string | null | undefined {
   const ecliContainer = window.document.getElementById(
@@ -24,10 +26,25 @@ function runShrinkwrapTasks() {
     // extract court from search url
     const params = window.location.search;
     const urlParams = new URLSearchParams(params);
-    const court = urlParams.get("Abfrage");
+    let court = harmonizeCourtCasing(urlParams.get("Abfrage"));
     const docNumber = urlParams.get("Dokumentnummer");
+    //court has to be correct casing
+
 
     console.log(`document ${docNumber} by court ${court}`);
+
+    let contentElem = document.querySelector(".document");
+    if (docNumber && contentElem) {
+      //load and prepend component to first document selector
+      let shrinkwrapElem = document.createElement("div");
+
+      const root = createRoot(shrinkwrapElem);
+      root.render(<ShrinkwrapAnalysis
+          docNumber={docNumber}
+          court={court}
+      />);
+      contentElem.before(shrinkwrapElem);
+    }
 
     if (court && docNumber) {
       chrome.runtime.sendMessage({
@@ -55,11 +72,7 @@ function runShrinkwrapTasks() {
     elements.forEach((elem) => {
       const url = new URL(elem.href, window.location.origin);
       const urlParams = new URLSearchParams(url.searchParams);
-      let court = urlParams.get("Abfrage");
-
-      //court has to be correct casing
-      const allowedCourts = ["Justiz", "VwGH", "VfGH", "BVwG", "LVwG", "DSB", "GBK"];
-      court = allowedCourts.filter(c => c.toLowerCase() == court?.toLowerCase())[0]
+      let court = harmonizeCourtCasing(urlParams.get("Abfrage"));
 
       const docNumber = urlParams.get("Dokumentnummer");
 
