@@ -37,27 +37,40 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             <div className="indeterminate-progress-bar__progress"></div></div></div>)}
 
             {caseData && (
-            <div className={`shrinkwrapAnalysis`}>
-                <p>
+            <div className={`shrinkwrapAnalysis `}>
+                <div>
                 <span style={{color: 'grey'}}>({caseData.wordCount} Wörter)</span>&ensp;
                 <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
-                </p>
-                <p>
+                </div>
+                <div className="mt-3">
                     <dl className="row">
-                        <dt className="col-sm-3">Zusammenfassung</dt>
+                        <dt className="col-sm-3">Sachverhalt</dt>
                         <dd className="col-sm-9">
-                            {caseData.summary?.zusammenfassung_3_absaetze?.map((absatz) => (
-                                <span>{absatz}<br /><br/></span>
-                            ))}
-                        </dd>
-                        <dt className="col-sm-3">Zusammenfassung</dt>
-                        <dd className="col-sm-9">
-                            {caseData.summary?.zusammenfassung_3_absaetze?.map((absatz) => (
-                                <span>{absatz}<br /><br/></span>
-                            ))}
+                            {caseData.summary?.sachverhalt}
                         </dd>
                     </dl>
-                </p>
+                    <dl className="row mt-2">
+                        <dt className="col-sm-3">Kläge(r)</dt>
+                        <dd className="col-sm-9">
+                            {caseData.summary?.begehren}
+                        </dd>
+                    </dl>
+                    <dl className="row mt-2">
+                        <dt className="col-sm-3">Beklagte(r)</dt>
+                        <dd className="col-sm-9">
+                            {caseData.summary?.gegenvorbringen}
+                        </dd>
+                    </dl>
+                    <dl className="row mt-2">
+                        <dt className="col-sm-3">Schlussfolgerungen</dt>
+                        <dd className="col-sm-9">
+                            {caseData.summary?.schlussfolgerungen?.map((absatz) => (
+                                <div className={"mt-1"}>{absatz}</div>
+                            ))}
+                        </dd>
+
+                    </dl>
+                </div>
 
             </div>)}
         </div>

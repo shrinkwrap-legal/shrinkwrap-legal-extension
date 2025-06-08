@@ -10,6 +10,7 @@ $theme-colors: map-merge($theme-colors, (
 ));
 
 @import 'bootstrap/scss/bootstrap-grid.scss';
+@import 'bootstrap/scss/utilities.scss';
 
 .shrinkwrapRow {
   font-family: $font-family-sans-serif;
@@ -73,6 +74,7 @@ $theme-colors: map-merge($theme-colors, (
 
 /* analysis */
 .shrinkwrapAnalysisBlock {
+  font-family: $font-family-sans-serif;
   position: relative;
   background-color: #fcffff;
   border: 1px solid #67BCBD;
@@ -81,6 +83,10 @@ $theme-colors: map-merge($theme-colors, (
 
   .shrinkwrapAnalysis {
     padding: 0.5em;
+
+    .shrinkwrapTitle, dt {
+      font-weight: 600;
+    }
   }
 
 
