@@ -1,5 +1,15 @@
 $font-family-sans-serif:      system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+
+$theme-colors: map-merge($theme-colors, (
+        "primary": #00415d,
+        "secondary": #74d4d5,
+        "shrinkwrap": #e5e5e5,
+));
+
+@import 'bootstrap/scss/bootstrap-grid.scss';
 
 .shrinkwrapRow {
   font-family: $font-family-sans-serif;

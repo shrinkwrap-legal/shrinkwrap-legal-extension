@@ -37,13 +37,28 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             <div className="indeterminate-progress-bar__progress"></div></div></div>)}
 
             {caseData && (
-            <div className={`shrinkwrapAnalysis ${showSummary ? ' showSummary' : ''}`}
-                onClick={() => setShowSummary(s => !s)}>
-                <span style={{color: 'grey'}}>({caseData?.wordCount} Wörter)</span>&ensp;
-                <span className="shrinkwrapTitle">{caseData?.summary?.zeitungstitel_boulevard}</span>
-                {showSummary && (
-                    <div className="shrinkwrapSummary">{caseData?.summary?.zusammenfassung_3_saetze}</div>
-                )}
+            <div className={`shrinkwrapAnalysis`}>
+                <p>
+                <span style={{color: 'grey'}}>({caseData.wordCount} Wörter)</span>&ensp;
+                <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
+                </p>
+                <p>
+                    <dl className="row">
+                        <dt className="col-sm-3">Zusammenfassung</dt>
+                        <dd className="col-sm-9">
+                            {caseData.summary?.zusammenfassung_3_absaetze?.map((absatz) => (
+                                <span>{absatz}<br /><br/></span>
+                            ))}
+                        </dd>
+                        <dt className="col-sm-3">Zusammenfassung</dt>
+                        <dd className="col-sm-9">
+                            {caseData.summary?.zusammenfassung_3_absaetze?.map((absatz) => (
+                                <span>{absatz}<br /><br/></span>
+                            ))}
+                        </dd>
+                    </dl>
+                </p>
+
             </div>)}
         </div>
     );
