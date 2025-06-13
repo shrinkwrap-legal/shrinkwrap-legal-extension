@@ -20,7 +20,7 @@
 
   "content_scripts": [
       {
-          "matches": ["https://ris.bka.gv.at/*"],
+          "matches": ["https://ris.bka.gv.at/*", "https://www.ris.bka.gv.at/*"],
           "js": ["js/content_script.js"]
       }
   ],
@@ -35,6 +35,6 @@
   ],
 
   "host_permissions": [
-    "https://ris.bka.gv.at/*"
+    "https://ris.bka.gv.at/*", "https://www.ris.bka.gv.at/*"
   ]
 }
