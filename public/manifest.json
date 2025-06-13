@@ -2,7 +2,7 @@
   "manifest_version": 3,
 
   "name": "Shrinkwrap.legal",
-  "description": "Shrinkwrap.legal Chrome Extension",
+  "description": "Urteilszusammenfassungen, direkt im RIS",
   "version": "0.0.1",
 
   "icons": {
@@ -35,6 +35,6 @@
   ],
 
   "host_permissions": [
-    "<all_urls>"
+    "https://ris.bka.gv.at/*"
   ]
 }
