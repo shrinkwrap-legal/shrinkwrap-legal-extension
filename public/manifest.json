@@ -2,7 +2,7 @@
   "manifest_version": 3,
 
   "name": "Shrinkwrap.legal",
-  "description": "Urteilszusammenfassungen, direkt im RIS",
+  "description": "Gerichtsurteile, passend verpackt.",
   "version": "0.0.1",
 
   "icons": {
