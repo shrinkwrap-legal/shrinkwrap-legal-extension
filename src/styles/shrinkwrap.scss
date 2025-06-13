@@ -12,5 +12,34 @@ $theme-colors: map-merge($theme-colors, (
 
 .sw-sidepanel {
   padding: 8pt;
-  background-color: #e5e5e5;
+  background-color: #fcffff;
+  position: absolute;
+}
+
+/* https://dev.to/deepakdevanand/pulse-css-animation-43h */
+.vibrate {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgb(0, 133, 0);
+  transform: scale(1);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 1);
+  animation: anim-vibrate 2s infinite;
+
+  @keyframes anim-vibrate {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgb(0, 133, 0);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0.6rem rgba(0, 0, 0, 0);
+    }
+
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+  }
 }

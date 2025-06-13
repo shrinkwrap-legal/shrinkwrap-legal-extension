@@ -25,60 +25,28 @@ const SidePanel = () => {
   }, []);
 
   return (
-    <div>
-        <div className="card mb-3">
-            <div className="card-body">
-                <h5 className="card-title bg-secondary">RIS Dokument</h5>
-                <p>DocNumber: {risMessage?.docNumber ?? ""}</p>
-                <p>ECLI: {risMessage?.ecli ?? ""}</p>
-                <p>Gericht/Abfrage: {risMessage?.court ?? ""}</p>
+    <div className={"h-100 d-flex align-items-start flex-column"}>
+        <div className={"row m-2 w-100"}>
+            <div className={"col-1 align-content-center align-content-end"}>
+                <div className="vibrate"></div>
             </div>
+            <div className={"col-8"}>shrinkwrap.legal ist aktiv.</div>
+        </div>
+        <div className={"row mt-3 w-100"}>
+            <p className={"lead"}>
+                Surfen Sie im <a target={"_blank"} href={"https://ris.bka.gv.at/Judikatur/"}>Rechtsinformationssystem des Bundes (RIS)</a>,
+                um KI-generierte Urteilsübersichten direkt im RIS zu erhalten.
+            </p>
+        </div>
+        <div className={"mt-auto "}>
+            <a href={"https://shrinkwrap.legal"} target={"_blank"} className={"text-muted"}>Impressum</a>
         </div>
 
-      <div className="mb-3">
-        <LoadingButton isLoading={isFetching} onClick={handleClick}>
-          Ergebnis generieren
-        </LoadingButton>
-      </div>
-        {error ? <div>Uups, es ist mir leider ein Fehler passiert.</div>
-            : data &&
-            <div>
-
-                <div className="card mb-3">
-                    <div className="card-body">
-                        <h5 className="card-title  bg-secondary">{data.summary?.zeitungstitel_boulevard}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{data.summary?.zeitungstitel_oeffentlich}</h6>
-                        <p className="card-text">{data.summary?.zeitungstitel_rechtszeitschrift}</p>
-                    </div>
-                </div>
-                <div className="card mb-3">
-                    <div className="card-body">
-                        <h5 className="card-title">Metadaten</h5>
-                        <div className="list-group">
-                            <div className="list-group-item">
-                                Ausgang: {data.summary?.ausgang}
-                            </div>
-                            <div className={"list-group-item"}>
-                                Anzahl Wörter: {data.wordCount}
-                            </div>
-                            <div className={"list-group-item"}>
-                                Sachverhalt: {data.summary?.sachverhalt}
-                            </div>
-                            <div className={"list-group-item"}>
-                                Rechtsmittel: {data.summary?.rechtsmittel}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        }
     </div>
   );
 };
 
-                    const root = createRoot(document.getElementById("root")!);
+const root = createRoot(document.getElementById("root")!);
 
 const queryClient = new QueryClient();
 root.render(
