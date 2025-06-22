@@ -12,6 +12,14 @@ $theme-colors: map-merge($theme-colors, (
 @import 'bootstrap/scss/bootstrap-grid.scss';
 @import 'bootstrap/scss/utilities.scss';
 
+.ai-logo-container {
+  color: #aaa;
+
+  &:hover {
+    color: #444;
+  }
+}
+
 .shrinkwrapRow {
   font-family: $font-family-sans-serif;
   padding: 4px;
@@ -89,7 +97,8 @@ $theme-colors: map-merge($theme-colors, (
     }
   }
 
-
-
+  .ai-logo-container {
+    float: right;
+  }
 
 }

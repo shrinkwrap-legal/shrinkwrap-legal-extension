@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {api, CaseLawResponseDto, GetShrinkwrapDocumentParamsCourtEnum} from "../api";
+import {RobotIcon} from "../components/BootstrapIcons"
 
 interface ShrinkwrapAnalysisProps {
     court: string;
@@ -43,6 +44,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                         <div>
                             {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
                             <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
+                            <div className={"ai-logo-container"}><RobotIcon></RobotIcon></div>
                         </div>
                         <div className="mt-3">
                             <dl className="row">
