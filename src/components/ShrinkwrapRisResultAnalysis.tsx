@@ -39,7 +39,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             {caseData && (
             <div className={`shrinkwrapAnalysis `}>
                 <div>
-                <span style={{color: 'grey'}}>({caseData.wordCount} Wörter)</span>&ensp;
+                    {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
                 <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
                 </div>
                 <div className="mt-3">

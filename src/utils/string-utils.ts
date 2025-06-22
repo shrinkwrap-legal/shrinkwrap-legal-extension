@@ -12,3 +12,6 @@ export function harmonizeCourtCasing(str: string | null): string {
   let court = allowedCourts.filter(c => c.toLowerCase() == str?.toLowerCase())[0];
   return court;
 }
+export function getReadTimeInMinutesFromWordcount(words: number): number {
+  return words / 150;
+}
