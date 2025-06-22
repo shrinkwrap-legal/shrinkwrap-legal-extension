@@ -25,6 +25,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                     docNumber: docNumber!,
                     court: court! as GetShrinkwrapDocumentParamsCourtEnum,
                 });
+            setIsFetching(false);
             setCaseData(response.data)
         } catch (e) {
             console.log(e)
@@ -32,47 +33,50 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
     }
 
     return (
-        <div className={'shrinkwrapAnalysisBlock'}>
-            {isFetching && (<div className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
-            <div className="indeterminate-progress-bar__progress"></div></div></div>)}
+        <div>{(isFetching || caseData) && (
+            <div className={'shrinkwrapAnalysisBlock'}>
+                {isFetching && (<div className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
+                    <div className="indeterminate-progress-bar__progress"></div></div></div>)}
 
-            {caseData && (
-            <div className={`shrinkwrapAnalysis `}>
-                <div>
-                    {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
-                <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
-                </div>
-                <div className="mt-3">
-                    <dl className="row">
-                        <dt className="col-sm-3">Sachverhalt</dt>
-                        <dd className="col-sm-9">
-                            {caseData.summary?.sachverhalt}
-                        </dd>
-                    </dl>
-                    <dl className="row mt-2">
-                        <dt className="col-sm-3">Kläge(r)</dt>
-                        <dd className="col-sm-9">
-                            {caseData.summary?.begehren}
-                        </dd>
-                    </dl>
-                    <dl className="row mt-2">
-                        <dt className="col-sm-3">Beklagte(r)</dt>
-                        <dd className="col-sm-9">
-                            {caseData.summary?.gegenvorbringen}
-                        </dd>
-                    </dl>
-                    <dl className="row mt-2">
-                        <dt className="col-sm-3">Schlussfolgerungen</dt>
-                        <dd className="col-sm-9">
-                            {caseData.summary?.schlussfolgerungen?.map((absatz) => (
-                                <div className={"mt-1"}>{absatz}</div>
-                            ))}
-                        </dd>
+                {caseData && (
+                    <div className={`shrinkwrapAnalysis `}>
+                        <div>
+                            {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
+                            <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
+                        </div>
+                        <div className="mt-3">
+                            <dl className="row">
+                                <dt className="col-sm-3">Sachverhalt</dt>
+                                <dd className="col-sm-9">
+                                    {caseData.summary?.sachverhalt}
+                                </dd>
+                            </dl>
+                            <dl className="row mt-2">
+                                <dt className="col-sm-3">Kläge(r)</dt>
+                                <dd className="col-sm-9">
+                                    {caseData.summary?.begehren}
+                                </dd>
+                            </dl>
+                            <dl className="row mt-2">
+                                <dt className="col-sm-3">Beklagte(r)</dt>
+                                <dd className="col-sm-9">
+                                    {caseData.summary?.gegenvorbringen}
+                                </dd>
+                            </dl>
+                            <dl className="row mt-2">
+                                <dt className="col-sm-3">Schlussfolgerungen</dt>
+                                <dd className="col-sm-9">
+                                    {caseData.summary?.schlussfolgerungen?.map((absatz) => (
+                                        <div className={"mt-1"}>{absatz}</div>
+                                    ))}
+                                </dd>
 
-                    </dl>
-                </div>
+                            </dl>
+                        </div>
 
-            </div>)}
+                    </div>)}
+            </div>
+            )}
         </div>
     );
 };
