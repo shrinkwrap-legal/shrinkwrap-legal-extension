@@ -54,15 +54,21 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                                 </dd>
                             </dl>
                             <dl className="row mt-2">
-                                <dt className="col-sm-3">Kläger(in)</dt>
+                                <dt className="col-sm-3">Begehren</dt>
                                 <dd className="col-sm-9">
                                     {caseData.summary?.begehren}
                                 </dd>
                             </dl>
                             <dl className="row mt-2">
-                                <dt className="col-sm-3">Beklagte(r)</dt>
+                                <dt className="col-sm-3">Gegenvorbringen</dt>
                                 <dd className="col-sm-9">
                                     {caseData.summary?.gegenvorbringen}
+                                </dd>
+                            </dl>
+                            <dl className="row mt-2">
+                                <dt className="col-sm-3">Entscheidung</dt>
+                                <dd className="col-sm-9">
+                                    {caseData.summary?.entscheidung_gericht}
                                 </dd>
                             </dl>
                             <dl className="row mt-2">

@@ -26,12 +26,13 @@ export interface CaseLawResponseDto {
 
 export interface CaselawSummaryCivilCase {
   art: string;
-  eugh: Boolean;
+  eugh?: Boolean;
   ausgang?: string;
   rechtsmittel?: string;
   sachverhalt?: string;
   begehren?: string;
   gegenvorbringen?: string;
+  entscheidung_gericht?: string;
   zusammenfassung_3_absaetze?: string[];
   zusammenfassung_3_saetze?: string;
   zeitungstitel_boulevard?: string;
