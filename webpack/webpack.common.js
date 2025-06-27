@@ -92,6 +92,13 @@ name: 'vendor',
             patterns: [{ from: ".", to: "../", context: "public" }],
             options: {},
         }),
+        new CopyPlugin({
+            patterns: [{
+                from: "src/_locales",
+                to: "../_locales",
+                noErrorOnMissing: true
+            }],
+        }),
         new Dotenv({ }),
     ],
 };
