@@ -13,3 +13,40 @@ export function RobotIcon() {
         </span>
     )
 }
+
+export function EUIcon() {
+    return (
+        <span title={"EuGH-Vorlage"} className={"eu-icon"}>
+       <svg width="15" height="15" id="European flag" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            >
+        <defs>
+        <polygon id="star" fill="#ffcc33" transform="scale(1.5)" points="0,-1
+    0.224513988289792686220972575898763393789606,-0.309016994374947424102293417182819058860155
+    0.951056516295153572116439333379382143405699,-0.309016994374947424102293417182819058860155
+    0.363271264002680442947733378740309374808046,0.118033988749894848204586834365638117720309
+    0.587785252292473129168705954639072768597652,0.809016994374947424102293417182819058860155
+    0,0.381966011250105151795413165634361882279691
+    -0.587785252292473129168705954639072768597652,0.809016994374947424102293417182819058860155
+    -0.363271264002680442947733378740309374808046,0.118033988749894848204586834365638117720309
+    -0.951056516295153572116439333379382143405699,-0.309016994374947424102293417182819058860155
+    -0.224513988289792686220972575898763393789606,-0.309016994374947424102293417182819058860155"/>
+    </defs>
+    <rect width="15" height="15" fill="#003399"/>
+    <g transform="translate(7.5,7.5)">
+        <use xlinkHref="#star" transform="translate(0,-5)"/>
+        <use xlinkHref="#star" transform="rotate(30) translate(0,-5) rotate(-30)"/>
+        <use xlinkHref="#star" transform="rotate(60) translate(0,-5) rotate(-60)"/>
+        <use xlinkHref="#star" transform="rotate(90) translate(0,-5) rotate(-90)"/>
+        <use xlinkHref="#star" transform="rotate(120) translate(0,-5) rotate(-120)"/>
+        <use xlinkHref="#star" transform="rotate(150) translate(0,-5) rotate(-150)"/>
+        <use xlinkHref="#star" transform="rotate(180) translate(0,-5) rotate(-180)"/>
+        <use xlinkHref="#star" transform="rotate(210) translate(0,-5) rotate(-210)"/>
+        <use xlinkHref="#star" transform="rotate(240) translate(0,-5) rotate(-240)"/>
+        <use xlinkHref="#star" transform="rotate(270) translate(0,-5) rotate(-270)"/>
+        <use xlinkHref="#star" transform="rotate(300) translate(0,-5) rotate(-300)"/>
+        <use xlinkHref="#star" transform="rotate(330) translate(0,-5) rotate(-330)"/>
+    </g>
+</svg>
+        </span>
+    )
+}

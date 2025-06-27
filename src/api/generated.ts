@@ -26,6 +26,7 @@ export interface CaseLawResponseDto {
 
 export interface CaselawSummaryCivilCase {
   art: string;
+  eugh: Boolean;
   ausgang?: string;
   rechtsmittel?: string;
   sachverhalt?: string;
