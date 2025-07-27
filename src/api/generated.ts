@@ -20,18 +20,27 @@ export interface CaseLawResponseDto {
   /** @format int32 */
   analysisVersion?: number;
   summary?: CaselawSummaryCivilCase;
+  prompts?: CaseLawSummaryPromptsDto;
   /** @format int64 */
   wordCount?: number;
 }
 
+export interface CaseLawSummaryPromptsDto {
+  model?: string;
+  user_prompt?: string;
+  system_prompt?: string;
+}
+
 export interface CaselawSummaryCivilCase {
   art: string;
-  eugh?: Boolean;
+  eugh?: boolean;
   ausgang?: string;
   rechtsmittel?: string;
+  verfahrensart?: string;
   sachverhalt?: string;
   begehren?: string;
   gegenvorbringen?: string;
+  berufende_partei?: string;
   entscheidung_gericht?: string;
   zusammenfassung_3_absaetze?: string[];
   zusammenfassung_3_saetze?: string;
@@ -395,6 +404,7 @@ export class Api<
          */
         docNumber?: string;
         court?: GetShrinkwrapDocumentParamsCourtEnum;
+        includePrompts?: boolean;
       },
       params: RequestParams = {},
     ) =>
