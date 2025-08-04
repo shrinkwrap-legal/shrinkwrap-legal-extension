@@ -8,7 +8,7 @@
     "watch-remote": "cross-env NODE_ENV=remote webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
     "generate-api": "swagger-typescript-api generate --path http://localhost:8080/api/v3/api-docs -o ./src/api -n generated.ts  --extract-enums --generate-union-enums",
-    "generate-api-remove": "swagger-typescript-api generate --path https://api.shrinkwrap.legal/api/v3/api-docs -o ./src/api -n generated.ts  --extract-enums --generate-union-enums",
+    "generate-api-remote": "swagger-typescript-api generate --path https://api.shrinkwrap.legal/api/v3/api-docs -o ./src/api -n generated.ts  --extract-enums --generate-union-enums",
     "clean": "rimraf dist",
     "test": "npx jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\""

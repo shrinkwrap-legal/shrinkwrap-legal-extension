@@ -18,7 +18,7 @@ function getEcliFromContent(): string | null | undefined {
 
 
 function runShrinkwrapTasks() {
-  const ecli = getEcliFromContent();
+  //const ecli = getEcliFromContent();
 
   if (window.location.pathname === "/Dokument.wxe") {
     console.log("hello RIS, it's shrinkwrap extracting doc info");
@@ -50,7 +50,7 @@ function runShrinkwrapTasks() {
       chrome.runtime.sendMessage({
         docNumber: docNumber,
         court: court,
-        ecli: ecli?.trim(),
+        //ecli: ecli?.trim(),
       });
     }
   } else if (window.location.pathname === "/Ergebnis.wxe") {

@@ -29,6 +29,7 @@ export interface CaseLawSummaryPromptsDto {
   model?: string;
   user_prompt?: string;
   system_prompt?: string;
+  removed_from_prompt?: string;
 }
 
 export interface CaselawSummaryCivilCase {

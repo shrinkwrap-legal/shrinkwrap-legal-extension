@@ -41,7 +41,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                 {isFetching && (<div className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
                     <div className="indeterminate-progress-bar__progress"></div></div></div>)}
 
-                {caseData && (
+                {caseData && caseData.summary && (
                     <div className={`shrinkwrapAnalysis `}>
                         <div>
                             {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
@@ -149,6 +149,14 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                                         {caseData.prompts?.user_prompt}
                                     </dd>
                                 </dl>
+                                {caseData.prompts?.removed_from_prompt && (
+                                    <dl className="row mt-2">
+                                        <dt className="col-sm-3">Nicht verwendeter Inhalt</dt>
+                                        <dd className="col-sm-9 prompt">
+                                            {caseData.prompts?.removed_from_prompt}
+                                        </dd>
+                                    </dl>
+                                )}
                             </div>
                         ): (
                             <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails anzeigen</a>
