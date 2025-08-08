@@ -77,6 +77,7 @@ function runShrinkwrapTasks() {
       const docNumber = urlParams.get("Dokumentnummer");
 
       let tableRow = elem?.element?.parentElement?.parentElement;
+      let children = tableRow?.querySelectorAll("td.bocListDataCell").length;
       if (tableRow && docNumber != null) {
         let newRow = document.createElement("tr");
         newRow.classList.add(...tableRow.classList)
@@ -85,6 +86,7 @@ function runShrinkwrapTasks() {
         root.render(<ShrinkwrapRow
             docNumber={docNumber}
             court={court}
+            children={((children && children>7)?children:8)}
         />);
         tableRow.before(newRow);
       }

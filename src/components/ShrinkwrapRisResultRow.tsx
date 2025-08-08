@@ -6,9 +6,10 @@ import {EUIcon} from "./BootstrapIcons";
 interface ShrinkwrapRowProps {
     court: string;
     docNumber: string;
+    children: number;
 }
 
-export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber}) => {
+export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, children}) => {
     const [showSummary, setShowSummary] = useState(false);
     const [isFetching, setIsFetching] = useState(false)
     const [caseData, setCaseData] = useState<CaseLawResponseDto | null>(null)
@@ -37,7 +38,7 @@ export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber})
         isFetching && (<td colSpan={8} className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
             <div className="indeterminate-progress-bar__progress"></div></div></td>) ||
         caseData && (
-            <td colSpan={8} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
+            <td colSpan={children} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
                 onClick={() => setShowSummary(s => !s)}>
                 {caseData.wordCount && (<span style={{color: 'grey'}} title={caseData.wordCount + " Wörter"}>({Math.ceil(getReadTimeInMinutesFromWordcount(caseData.wordCount))} min.)&ensp;</span>)}
                 <span className="shrinkwrapTitle">
