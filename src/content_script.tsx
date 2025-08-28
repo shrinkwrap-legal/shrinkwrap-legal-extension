@@ -5,6 +5,7 @@ import {createRoot} from "react-dom/client";
 import {ShrinkwrapRow} from "./components/ShrinkwrapRisResultRow";
 import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
 import {harmonizeCourtCasing} from "./utils/string-utils";
+import {ShrinkwrapModal} from "./components/ShrinkwrapModal";
 
 function getEcliFromContent(): string | null | undefined {
   const ecliContainer = window.document.getElementById(
@@ -55,8 +56,16 @@ function runShrinkwrapTasks() {
     }
   } else if (window.location.pathname === "/Ergebnis.wxe") {
     console.log("hello RIS, it's shrinkwrap extracting search info");
+      //show Modal if still wanted by user
+      let shrinkwrapModal = document.createElement("div");
+      shrinkwrapModal.style.width = "100%";
+      const shrinkwrapModalRoot = createRoot(shrinkwrapModal);
+      shrinkwrapModalRoot.render(<ShrinkwrapModal/>);
+      document.querySelector("body")?.append(shrinkwrapModal);
+      console.log("appended modal");
 
-    //get all URLs to single judgements, if any
+
+      //get all URLs to single judgements, if any
     let elements = Array.from(document.querySelectorAll("a"))
       .filter((elem) => {
         return elem.hasAttribute("href");
