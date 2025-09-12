@@ -15,7 +15,10 @@
     "default_icon": "icon.png"
   },
 
-  "sidebar_action": {
+  "__chrome__side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "__firefox__sidebar_action": {
     "default_icon": {
       "16": "icon.png",
       "32": "icon.png"
@@ -32,11 +35,17 @@
       }
   ],
 
-  "background": {
+  "__firefox__background": {
     "scripts": ["js/background.js"]
   },
+  "__chrome__background": {
+    "service_worker": "js/background.js"
+  },
 
-  "permissions": [
+  "__chrome__permissions": [
+    "storage", "sidePanel"
+  ],
+  "__firefox__permissions": [
     "storage"
   ],
 
@@ -44,7 +53,7 @@
     "https://ris.bka.gv.at/*", "https://www.ris.bka.gv.at/*"
   ],
 
-  "browser_specific_settings": {
+  "__firefox__browser_specific_settings": {
     "gecko": {
       "id": "extension@shrinkwrap.legal"
     }
