@@ -3,6 +3,13 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberati
 
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/modal';
 
 $theme-colors: map-merge($theme-colors, (
         "primary": #00415d,
