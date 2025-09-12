@@ -15,8 +15,14 @@
     "default_icon": "icon.png"
   },
 
-  "side_panel": {
-    "default_path": "sidepanel.html"
+  "sidebar_action": {
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png"
+    },
+    "default_title": "shrinkwrap.legal",
+    "default_panel": "sidepanel.html",
+    "open_at_install":false
   },
 
   "content_scripts": [
@@ -27,15 +33,20 @@
   ],
 
   "background": {
-    "service_worker": "js/background.js"
+    "scripts": ["js/background.js"]
   },
 
   "permissions": [
-    "storage",
-    "sidePanel"
+    "storage"
   ],
 
   "host_permissions": [
     "https://ris.bka.gv.at/*", "https://www.ris.bka.gv.at/*"
-  ]
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@shrinkwrap.legal"
+    }
+  }
 }
