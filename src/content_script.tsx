@@ -33,10 +33,13 @@ function runShrinkwrapTasks() {
       let shrinkwrapElem = document.createElement("div");
 
       const root = createRoot(shrinkwrapElem);
-      root.render(<ShrinkwrapAnalysis
+      root.render(
+        <ShrinkwrapAnalysis
+          key={'analysis_' + court + '_' + docNumber}
           docNumber={docNumber}
           court={court}
-      />);
+        />,
+      );
       contentElem.before(shrinkwrapElem);
     }
 

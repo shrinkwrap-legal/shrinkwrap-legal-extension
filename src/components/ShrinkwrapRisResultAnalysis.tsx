@@ -1,6 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {api, CaseLawResponseDto, GetShrinkwrapDocumentParamsCourtEnum} from "../api";
-import {RobotIcon, CodeSlashIcon} from "../components/BootstrapIcons"
+import React, { useEffect, useState } from 'react';
+import {
+  api,
+  CaseLawResponseDto,
+  GetShrinkwrapDocumentParamsCourtEnum,
+} from '../api';
+import { RobotIcon, CodeSlashIcon } from './BootstrapIcons';
 
 interface ShrinkwrapAnalysisProps {
     court: string;
