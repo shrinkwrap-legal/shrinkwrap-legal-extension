@@ -2,7 +2,7 @@ name: NodeJS with Webpack
 
 on:
   push:
-  
+
   pull_request:
     branches: [ "main", "dev", "develop" ]
 
@@ -30,4 +30,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: extension
+        path: dist
+    - name: Build
+      run: |
+        npm clean
+        npm run build-firefox
+    - name: Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: extension-firefox
         path: dist
