@@ -16,3 +16,8 @@ This project uses environment variables for configuration. To set up your enviro
    ```
 
 The `.env` file is excluded from version control to prevent sensitive information from being committed.
+
+
+## Webpack 
+
+use 1.63.6 sass version to avoid deprecation warning
