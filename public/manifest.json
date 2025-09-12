@@ -15,8 +15,17 @@
     "default_icon": "icon.png"
   },
 
-  "side_panel": {
+  "__chrome__side_panel": {
     "default_path": "sidepanel.html"
+  },
+  "__firefox__sidebar_action": {
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png"
+    },
+    "default_title": "shrinkwrap.legal",
+    "default_panel": "sidepanel.html",
+    "open_at_install":false
   },
 
   "content_scripts": [
@@ -26,16 +35,27 @@
       }
   ],
 
-  "background": {
+  "__firefox__background": {
+    "scripts": ["js/background.js"]
+  },
+  "__chrome__background": {
     "service_worker": "js/background.js"
   },
 
-  "permissions": [
-    "storage",
-    "sidePanel"
+  "__chrome__permissions": [
+    "storage", "sidePanel"
+  ],
+  "__firefox__permissions": [
+    "storage"
   ],
 
   "host_permissions": [
     "https://ris.bka.gv.at/*", "https://www.ris.bka.gv.at/*"
-  ]
+  ],
+
+  "__firefox__browser_specific_settings": {
+    "gecko": {
+      "id": "extension@shrinkwrap.legal"
+    }
+  }
 }
