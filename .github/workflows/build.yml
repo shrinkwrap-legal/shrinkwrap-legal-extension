@@ -33,7 +33,7 @@ jobs:
         path: dist
     - name: Build
       run: |
-        npm clean
+        npm run clean
         npm run build-firefox
     - name: Package
       uses: actions/upload-artifact@v4
