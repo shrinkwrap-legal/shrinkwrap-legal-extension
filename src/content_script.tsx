@@ -1,4 +1,3 @@
-
 import "./styles/content.scss";
 import React from "react";
 import {createRoot} from "react-dom/client";
@@ -6,16 +5,6 @@ import {ShrinkwrapRow} from "./components/ShrinkwrapRisResultRow";
 import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
 import {harmonizeCourtCasing} from "./utils/string-utils";
 import {ShrinkwrapModal} from "./components/ShrinkwrapModal";
-
-function getEcliFromContent(): string | null | undefined {
-  const ecliContainer = window.document.getElementById(
-    "MainContent_DocumentRepeater_JustizDocumentData_0_EcliContainer_0",
-  );
-  if (ecliContainer) {
-    return ecliContainer.lastChild?.textContent;
-  }
-  return null;
-}
 
 
 function runShrinkwrapTasks() {
@@ -34,6 +23,9 @@ function runShrinkwrapTasks() {
     if (court == null) { return; }
 
     console.log(`document ${docNumber} by court ${court}`);
+
+    //show info to user
+    appendModal(document);
 
     let contentElem = document.querySelector(".document");
     if (docNumber && contentElem) {
@@ -62,12 +54,7 @@ function runShrinkwrapTasks() {
     let searchCourt = harmonizeCourtCasing(searchUrlParams.get("Abfrage"));
     if (searchCourt != null && searchUrlParams.get("SucheNachText") === "True") {
       //show Modal if still wanted by user
-      let shrinkwrapModal = document.createElement("div");
-      shrinkwrapModal.style.width = "100%";
-      const shrinkwrapModalRoot = createRoot(shrinkwrapModal);
-      shrinkwrapModalRoot.render(<ShrinkwrapModal/>);
-      document.querySelector("body")?.append(shrinkwrapModal);
-      console.log("appended modal");
+      appendModal(document);
     }
 
 
@@ -113,6 +100,16 @@ function runShrinkwrapTasks() {
 const host = window.location.host;
 if (host === "www.ris.bka.gv.at" || host === "ris.bka.gv.at") {
   runShrinkwrapTasks();
+}
+
+function appendModal(document: Document) {
+  //show Modal if still wanted by user
+  let shrinkwrapModal = document.createElement("div");
+  shrinkwrapModal.style.width = "100%";
+  const shrinkwrapModalRoot = createRoot(shrinkwrapModal);
+  shrinkwrapModalRoot.render(<ShrinkwrapModal/>);
+  document.querySelector("body")?.append(shrinkwrapModal);
+  console.log("appended modal");
 }
 
 /**
