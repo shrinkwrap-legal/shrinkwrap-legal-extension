@@ -30,7 +30,20 @@ export const ShrinkwrapModal : React.FC = () => {
             <Modal.Header closeButton>
                 <Modal.Title>Info von Shrinkwrap.legal</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Zusammenfassungen für alle Suchergebnisse werden automatisch erstellt und werden danach angezeigt. Bitte haben Sie ca 20-30 Sekunden Geduld.</Modal.Body>
+            <Modal.Body><div>
+                <p className={"mt-0"}>
+                    Herzlich Willkommen bei shrinkwrap!
+                </p>
+                <p>
+                    Während Sie im RIS surfen, erstellt shrinkwrap.legal automatisch
+                    Zusammenfassungen für Entscheidungstexte in der RIS-Judikatursuche.
+                </p>
+                <p>
+                    Diese Ergebnisse werden mit KI generiert und danach angezeigt. Bitte haben
+                    Sie deshalb etwas Geduld, die Erstellung benötigt beim ersten Mal etwa 20-30 Sekunden.
+                </p>
+            </div>
+                </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleDisableInfoModal}>
                     Nicht wieder anzeigen
