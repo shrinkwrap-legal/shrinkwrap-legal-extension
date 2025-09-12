@@ -1,6 +1,6 @@
-import {api, CaseLawResponseDto, GetShrinkwrapDocumentParamsCourtEnum} from "./api";
+
 import "./styles/content.scss";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {createRoot} from "react-dom/client";
 import {ShrinkwrapRow} from "./components/ShrinkwrapRisResultRow";
 import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
