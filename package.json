@@ -14,7 +14,7 @@
     "style": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "author": "",
-  "license": "AGPL3",
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/shrinkwrap-legal/shrinkwrap-legal-extension.git"
