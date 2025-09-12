@@ -50,13 +50,14 @@ const SidePanel = () => {
         </div>
         <div className={"row mt-3 w-100"}>
             <h3>Einstellungen</h3>
-            <FormLabel htmlFor={'target'} >Zielgruppe</FormLabel>
-            <FormSelect onChange={handleSelection} id={'target'} aria-label="Zielgruppe" value={headline}>
-                <option value={'boulevard'}>Boulevard</option>
-                <option value={'newspaper'}>Tageszeitung</option>
-                <option value={'journal'}>Rechtszeitschrift</option>
-            </FormSelect>
-
+            <Form>
+                <FormLabel htmlFor={'target'} >Stil der Titel</FormLabel>
+                <FormSelect onChange={handleSelection} id={'target'} aria-label="Zielgruppe" value={headline}>
+                    <option value={'boulevard'}>Boulevard</option>
+                    <option value={'newspaper'}>Tageszeitung</option>
+                    <option value={'journal'}>Rechtszeitschrift</option>
+                </FormSelect>
+            </Form>
         </div>
         <div className={"mt-auto "}>
             <a href={"https://shrinkwrap.legal"} target={"_blank"} className={"text-muted"}>Impressum</a>
