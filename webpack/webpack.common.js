@@ -99,13 +99,6 @@ name: 'vendor',
                 noErrorOnMissing: true
             }],
         }),
-        /**
-         *  new CopyPlugin({
-         *             patterns: [{
-         *                 from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js',
-         *             }],
-         *         }),
-         */
         new Dotenv({ }),
     ],
 };

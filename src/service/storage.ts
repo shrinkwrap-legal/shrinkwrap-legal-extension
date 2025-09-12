@@ -21,8 +21,11 @@ export async function getSetting(key: string): Promise<string> {
     console.log('getSetting for',key, localSetting[key]);
 
     return localSetting[key] as string;
+}
 
-
+export function getOnChangedListener() {
+    const browserApi = getBrowserApi();
+    return browserApi.storage.onChanged;
 }
 
 

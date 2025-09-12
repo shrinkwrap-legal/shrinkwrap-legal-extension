@@ -17,8 +17,8 @@ $theme-colors: map-merge($theme-colors, (
         "shrinkwrap": #e5e5e5,
 ));
 
-@import 'bootstrap/scss/bootstrap-grid.scss';
-@import 'bootstrap/scss/utilities.scss';
+@import 'bootstrap/scss/bootstrap-grid';
+@import 'bootstrap/scss/utilities';
 
 .ai-logo-container {
   color: #aaa;
