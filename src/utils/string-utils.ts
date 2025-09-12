@@ -7,10 +7,13 @@ export function reverse(str: string): string {
   return str.split('').reverse().join('');
 }
 
-export function harmonizeCourtCasing(str: string | null): string {
+export function harmonizeCourtCasing(str: string | null): string | null {
   const allowedCourts = ["Justiz", "VwGH", "VfGH", "BVwG", "LVwG", "DSB", "GBK"];
-  let court = allowedCourts.filter(c => c.toLowerCase() == str?.toLowerCase())[0];
-  return court;
+  let courts = allowedCourts.filter(c => c.toLowerCase() == str?.toLowerCase());
+  if (courts.length == 0) {
+    return null;
+  }
+  return courts[0];
 }
 export function getReadTimeInMinutesFromWordcount(words: number): number {
   return words / 150;

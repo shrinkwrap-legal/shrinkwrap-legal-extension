@@ -31,6 +31,7 @@ function runShrinkwrapTasks() {
     const docNumber = urlParams.get("Dokumentnummer");
     //court has to be correct casing
 
+    if (court == null) { return; }
 
     console.log(`document ${docNumber} by court ${court}`);
 
@@ -56,6 +57,10 @@ function runShrinkwrapTasks() {
     }
   } else if (window.location.pathname === "/Ergebnis.wxe") {
     console.log("hello RIS, it's shrinkwrap extracting search info");
+    const searchParams = window.location.search;
+    const searchUrlParams = new URLSearchParams(searchParams);
+    let searchCourt = harmonizeCourtCasing(searchUrlParams.get("Abfrage"));
+    if (searchCourt != null && searchUrlParams.get("SucheNachText") === "True") {
       //show Modal if still wanted by user
       let shrinkwrapModal = document.createElement("div");
       shrinkwrapModal.style.width = "100%";
@@ -63,6 +68,7 @@ function runShrinkwrapTasks() {
       shrinkwrapModalRoot.render(<ShrinkwrapModal/>);
       document.querySelector("body")?.append(shrinkwrapModal);
       console.log("appended modal");
+    }
 
 
       //get all URLs to single judgements, if any
@@ -82,6 +88,7 @@ function runShrinkwrapTasks() {
       const url = new URL(elem.href, window.location.origin);
       const urlParams = new URLSearchParams(url.searchParams);
       let court = harmonizeCourtCasing(urlParams.get("Abfrage"));
+      if (court == null) { return; }
 
       const docNumber = urlParams.get("Dokumentnummer");
 
