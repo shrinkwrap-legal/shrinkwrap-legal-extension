@@ -1,23 +1,45 @@
-# shrinkwrap-legal-extension
+# Shrinkwrap.legal Browser Extension
 
-## Environment Variables
+Frontend to the Shrinkwrap.legal project — offering summaries of court judgements directly embedded into Austria's legal information System ("RIS").
 
-This project uses environment variables for configuration. To set up your environment:
+## Prerequisites
 
-1. Copy the `.env.example` file to a new file named `.env`:
-   ```
-   cp .env.example .env
-   ```
+- Node.js 22.x
+- npm
 
-2. Edit the `.env` file to set your environment-specific values:
-   ```
-   # API configuration
-   API_BASE_URL=http://localhost:8080  # URL of the API server
-   ```
+## Build
 
-The `.env` file is excluded from version control to prevent sensitive information from being committed.
+Copy the `.env.example` file to a new file named `.env`:
+
+```
+cp .env.example .env
+```
+
+Install dependencies
+
+```bash
+npm i
+```
+
+Build the extension with live reload
+```bash
+npm run watch
+```
+
+Build the extension for production use
+```bash
+npm run build
+```
+
+## Configuration
+
+- Environment is configured via `.env`:
+  - API_BASE_URL — base URL of the Shrinkwrap.legal API the extension talks to.
+- For non-default setups, ensure the backend is reachable from the browser at the configured base URL.
 
 
-## Webpack 
+## License
 
-use 1.63.6 sass version to avoid deprecation warning
+This project is licensed under the GNU Affero General Public License v3.0 (AGPLv3). See [LICENSE](LICENSE).
+
+This project received financial support from [netidee](https://www.netidee.at/shrinkwraplegal).
