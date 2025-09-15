@@ -37,9 +37,15 @@ npm run build
   - API_BASE_URL — base URL of the Shrinkwrap.legal API the extension talks to.
 - For non-default setups, ensure the backend is reachable from the browser at the configured base URL.
 
+## Generating the API
+
+```bash
+npx swagger-typescript-api generate --path https://api.shrinkwrap.legal/api/v3/api-docs
+```
 
 ## License
 
 This project is licensed under the GNU Affero General Public License v3.0 (AGPLv3). See [LICENSE](LICENSE).
 
 This project received financial support from [netidee](https://www.netidee.at/shrinkwraplegal).
+
