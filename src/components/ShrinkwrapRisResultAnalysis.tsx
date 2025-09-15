@@ -13,7 +13,8 @@ interface ShrinkwrapAnalysisProps {
 
 export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, docNumber}) => {
     const [showSummary, setShowSummary] = useState(false);
-    const [isFetching, setIsFetching] = useState(false)
+    const [isFetching, setIsFetching] = useState(false);
+    const [isFetchingLonger, setIsFetchingLonger] = useState(false);
     const [caseData, setCaseData] = useState<CaseLawResponseDto | null>(null)
     const [showDetails, setShowDetails] = useState(false);
 
@@ -25,6 +26,10 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
     },[docNumber,court])
 
     const fetchData = async () => {
+        //race the response - if itst too long, show a loading indicator
+        const timeout = setTimeout(() => {
+            setIsFetchingLonger(true);
+        }, 4000)
         try {
             let response = await api
                 .getShrinkwrapDocument({
@@ -36,13 +41,16 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             setCaseData(response.data)
         } catch (e) {
             console.log(e)
+        } finally {
+            clearTimeout(timeout);
         }
     }
 
     return (
         <div>{(isFetching || caseData) && (
             <div className={'shrinkwrapAnalysisBlock'}>
-                {isFetching && (<div className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
+                {isFetching && (<div className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar' + (isFetchingLonger ? ' indeterminate-progress-bar-almost-done' : '')}>
+                    {isFetchingLonger && (<div className="info-text-container">Entscheidungszusammenfassung wird generiert...</div>)}
                     <div className="indeterminate-progress-bar__progress"></div></div></div>)}
 
                 {caseData && caseData.summary && (

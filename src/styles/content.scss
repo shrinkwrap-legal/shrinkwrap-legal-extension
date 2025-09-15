@@ -61,6 +61,13 @@ $theme-colors: map-merge($theme-colors, (
   position: relative;
   overflow: hidden;
   width: 100%;
+
+  .info-text-container {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .indeterminate-progress-bar-almost-done {

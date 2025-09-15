@@ -43,21 +43,21 @@ export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, 
     },[docNumber,court])
 
     const fetchData = async () => {
+        //race the response - if itst too long, show a loading indicator
+        const timeout = setTimeout(() => {
+            setIsFetchingLonger(true);
+        }, 4000)
         try {
-            //race the response - if itst too long, show a loading indicator
-            const timeout = setTimeout(() => {
-                setIsFetchingLonger(true);
-            }, 4000)
-
             let response = await api
                 .getShrinkwrapDocument({
                     docNumber: docNumber!,
                     court: court! as GetShrinkwrapDocumentParamsCourtEnum,
                 });
-            clearTimeout(timeout);
             setCaseData(response.data)
         } catch (e) {
             console.log(e)
+        } finally {
+            clearTimeout(timeout);
         }
     }
 
