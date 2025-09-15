@@ -63,6 +63,12 @@ $theme-colors: map-merge($theme-colors, (
   width: 100%;
 }
 
+.indeterminate-progress-bar-almost-done {
+  transition: height 1s ease-in-out, background-color 1s ease-in-out;
+  background-color: #e9ebee;
+  height: 19px;
+}
+
 .indeterminate-progress-bar__progress {
   /* Color */
   background-color: #67BCBD;

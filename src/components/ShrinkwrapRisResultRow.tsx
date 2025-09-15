@@ -13,6 +13,7 @@ interface ShrinkwrapRowProps {
 export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, children}) => {
     const [showSummary, setShowSummary] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
+    const [isFetchingLonger, setIsFetchingLonger] = useState(false);
     const [caseData, setCaseData] = useState<CaseLawResponseDto | null>(null);
     const [headline, setHeadline] = useState<string>('boulevard');
 
@@ -37,16 +38,23 @@ export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, 
         });
         fetchData().then(() => {
             setIsFetching(false)
+            setIsFetchingLonger(false)
         })
     },[docNumber,court])
 
     const fetchData = async () => {
         try {
+            //race the response - if itst too long, show a loading indicator
+            const timeout = setTimeout(() => {
+                setIsFetchingLonger(true);
+            }, 4000)
+
             let response = await api
                 .getShrinkwrapDocument({
                     docNumber: docNumber!,
                     court: court! as GetShrinkwrapDocumentParamsCourtEnum,
                 });
+            clearTimeout(timeout);
             setCaseData(response.data)
         } catch (e) {
             console.log(e)
@@ -54,7 +62,7 @@ export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, 
     }
 
     return (
-        isFetching && (<td colSpan={8} className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar'}>
+        isFetching && (<td colSpan={8} className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar' + (isFetchingLonger ? ' indeterminate-progress-bar-almost-done' : '')}>
             <div className="indeterminate-progress-bar__progress"></div></div></td>) ||
         caseData && (
             <td colSpan={children} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
