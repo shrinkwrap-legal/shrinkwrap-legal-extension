@@ -1,11 +1,12 @@
 {
   "name": "shrinkwrap-legal",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "shrinkwrap.legal browser extension",
   "main": "index.js",
   "scripts": {
     "watch": "cross-env NODE_ENV=development TARGET_BROWSER=chrome webpack --config webpack/webpack.dev.js --watch",
     "watch-remote": "cross-env NODE_ENV=remote TARGET_BROWSER=chrome webpack --config webpack/webpack.dev.js --watch",
+    "watch-remote-firefox": "cross-env NODE_ENV=remote TARGET_BROWSER=firefox webpack --config webpack/webpack.dev.js --watch",
     "build": "cross-env TARGET_BROWSER=chrome webpack --config webpack/webpack.prod.js",
     "build-firefox": "cross-env TARGET_BROWSER=firefox webpack --config webpack/webpack.prod.js",
     "generate-api": "swagger-typescript-api generate --path http://localhost:8080/api/v3/api-docs -o ./src/api -n generated.ts  --extract-enums --generate-union-enums",
