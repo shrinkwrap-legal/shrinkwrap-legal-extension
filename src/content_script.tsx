@@ -5,6 +5,7 @@ import {ShrinkwrapRow} from "./components/ShrinkwrapRisResultRow";
 import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
 import {harmonizeCourtCasing} from "./utils/string-utils";
 import {ShrinkwrapModal} from "./components/ShrinkwrapModal";
+import {ShrinkwrapModalInitial} from "./components/ShrinkwrapModalInitial";
 
 
 function runShrinkwrapTasks() {
@@ -97,6 +98,8 @@ function runShrinkwrapTasks() {
         tableRow.before(newRow);
       }
     });
+  } else if (window.location.hash === "#shrinkwrap") {
+    appendModalInitial(document);
   }
 }
 
@@ -111,6 +114,16 @@ function appendModal(document: Document) {
   shrinkwrapModal.style.width = "100%";
   const shrinkwrapModalRoot = createRoot(shrinkwrapModal);
   shrinkwrapModalRoot.render(<ShrinkwrapModal/>);
+  document.querySelector("body")?.append(shrinkwrapModal);
+  console.log("appended modal");
+}
+
+function appendModalInitial(document: Document) {
+  //show Modal if still wanted by user
+  let shrinkwrapModal = document.createElement("div");
+  shrinkwrapModal.style.width = "100%";
+  const shrinkwrapModalRoot = createRoot(shrinkwrapModal);
+  shrinkwrapModalRoot.render(<ShrinkwrapModalInitial/>);
   document.querySelector("body")?.append(shrinkwrapModal);
   console.log("appended modal");
 }

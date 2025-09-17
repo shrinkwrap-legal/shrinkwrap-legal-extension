@@ -32,9 +32,6 @@ export const ShrinkwrapModal : React.FC = () => {
             </Modal.Header>
             <Modal.Body><div>
                 <p className={"mt-0"}>
-                    Herzlich Willkommen bei shrinkwrap!
-                </p>
-                <p>
                     Während Sie im RIS surfen, erstellt shrinkwrap.legal automatisch
                     Zusammenfassungen für Entscheidungstexte in der RIS-Judikatursuche.
                 </p>
