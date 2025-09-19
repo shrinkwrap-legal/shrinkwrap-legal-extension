@@ -76,9 +76,9 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { 
-                    from: ".", 
-                    to: "../", 
+                {
+                    from: ".",
+                    to: "../",
                     context: "public",
                     globOptions: {
                         ignore: ["**/manifest.json"]
@@ -102,10 +102,10 @@ module.exports = {
                 transform(content) {
                     const targetBrowser = process.env.TARGET_BROWSER || 'chrome';
                     const manifest = JSON.parse(content.toString());
-                    
+
                     // Process browser-specific fields
                     const processedManifest = {};
-                    
+
                     for (const [key, value] of Object.entries(manifest)) {
                         if (key.startsWith(`__${targetBrowser}__`)) {
                             // Remove prefix and add to manifest
@@ -116,13 +116,20 @@ module.exports = {
                             processedManifest[key] = value;
                         }
                     }
-                    
+
                     return JSON.stringify(processedManifest, null, 2);
                 }
             }],
         }),
-        new Dotenv({ }),
-        new webpack.DefinePlugin({
+      new Dotenv({
+        path: path.resolve(
+          __dirname,
+          `../.env${process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : ''}`
+        ),
+        systemvars: true,
+      }),
+
+      new webpack.DefinePlugin({
             'process.env.TARGET_BROWSER': JSON.stringify(process.env.TARGET_BROWSER || 'chrome'),
         }),
     ],
