@@ -12,11 +12,15 @@ export function storeSetting(key: string, value: any) {
 
 }
 
-export async function getSetting(key: string): Promise<string> {
+export async function getSetting(key: string, defaultValue?: string): Promise<string> {
   const browserApi = getBrowserApi();
   const localSetting = await browserApi.storage.local.get(key);
   console.log('getSetting for', key, localSetting[key]);
-
+  if (localSetting[key] === undefined) {
+    if (defaultValue) {
+      return defaultValue;
+    }
+  }
   return localSetting[key] as string;
 }
 

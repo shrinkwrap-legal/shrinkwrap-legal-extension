@@ -6,6 +6,7 @@ import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
 import {harmonizeCourtCasing} from "./utils/string-utils";
 import {ShrinkwrapModal} from "./components/ShrinkwrapModal";
 import {ShrinkwrapModalInitial} from "./components/ShrinkwrapModalInitial";
+import {getSetting} from "./service/storage";
 
 
 function runShrinkwrapTasks() {
@@ -100,6 +101,37 @@ function runShrinkwrapTasks() {
     });
   } else if (window.location.hash === "#shrinkwrap") {
     appendModalInitial(document);
+  } else if (window.location.pathname === "/Vfgh/" ||
+    window.location.pathname === "/Vwgh/" ||
+    window.location.pathname === "/Jus/" ||
+    window.location.search === "?Abfrage=Justiz&WxeReturnToSelf=True&TabbedMenuSelection=JudikaturTab" ||
+    window.location.pathname === "/Bvwg/" ||
+    window.location.pathname === "/Lvwg/" ||
+    window.location.pathname === "/Dsk/" ||
+    window.location.pathname === "/Dok/") {
+    //get rs checkbox
+    let rsCheckbox: HTMLInputElement | null = document.querySelector("#MainContent_RsField input[type=checkbox]");
+    let teCheckbox: HTMLInputElement | null = document.querySelector("#MainContent_TeField input[type=checkbox]");
+
+    //get from settings, what to check/uncheck
+    //try to get settings
+    (async () => {
+      let standard = await getSetting("searchStandard", "TE");
+      if ((standard === "RS" || standard === "TERS")) {
+        if (rsCheckbox?.checked === false) {
+          rsCheckbox.click();
+        }
+      } else if (rsCheckbox?.checked === true) {
+        rsCheckbox.click();
+      }
+      if ((standard === "TE" || standard === "TERS")) {
+        if (teCheckbox?.checked === false) {
+          teCheckbox.click();
+        }
+      } else if (teCheckbox?.checked === true) {
+        teCheckbox.click();
+      }
+    })();
   }
 }
 

@@ -9,6 +9,7 @@ import { getSetting, storeSetting } from './service/storage';
 
 const SidePanel = () => {
   const [headline, setHeadline] = useState<string>('boulevard');
+  const [searchStandard, setSearchStandard] = useState<string>('TE');
   useEffect(() => {
     chrome.runtime.onMessage.addListener((msg: Message, sender) => {
       console.log('message received', msg, sender);
@@ -20,6 +21,10 @@ const SidePanel = () => {
       const headlineSetting = await getSetting('headline');
       console.log('stored headline: ', headlineSetting);
       setHeadline(headlineSetting);
+
+      const searchStandardSetting = await getSetting('searchStandard');
+      console.log('stored headline: ', headlineSetting);
+      setHeadline(searchStandardSetting);
     }
     getBrowserSettings();
   }, []);
@@ -30,6 +35,17 @@ const SidePanel = () => {
       if (e.target.value) {
         storeSetting('headline', e.target.value);
         setHeadline(e.target.value);
+      }
+    },
+    [],
+  );
+
+  const handleSelectionSearchStandard = useCallback(
+    async (e: ChangeEvent<HTMLSelectElement>) => {
+      console.log('handleSelection called with: ', e.target.value);
+      if (e.target.value) {
+        storeSetting('searchStandard', e.target.value);
+        setSearchStandard(e.target.value);
       }
     },
     [],
@@ -66,6 +82,20 @@ const SidePanel = () => {
             <option value={'newspaper'}>Tageszeitung</option>
             <option value={'journal'}>Rechtszeitschrift</option>
           </FormSelect>
+
+
+            <FormLabel htmlFor={'searchStandard'} className={'mt-3'}>Suchstandard</FormLabel>
+            <FormSelect
+              onChange={handleSelectionSearchStandard}
+              id={'searchStandard'}
+              aria-label="Suchstandard"
+              value={searchStandard}
+            >
+              <option value={'TE'}>Entscheidungstexte</option>
+              <option value={'RS'}>Rechtssätze</option>
+              <option value={'TERS'}>beides</option>
+            </FormSelect>
+
         </Form>
       </div>
       <div className={'mt-auto '}>
