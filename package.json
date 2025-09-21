@@ -1,6 +1,6 @@
 {
   "name": "shrinkwrap-legal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "shrinkwrap.legal browser extension",
   "main": "index.js",
   "scripts": {
