@@ -7,6 +7,7 @@ import {harmonizeCourtCasing} from "./utils/string-utils";
 import {ShrinkwrapModal} from "./components/ShrinkwrapModal";
 import {ShrinkwrapModalInitial} from "./components/ShrinkwrapModalInitial";
 import {getSetting} from "./service/storage";
+import { StandardSearchSetter } from './components/StandardSearchSetter';
 
 
 function runShrinkwrapTasks() {
@@ -109,29 +110,13 @@ function runShrinkwrapTasks() {
     window.location.pathname === "/Lvwg/" ||
     window.location.pathname === "/Dsk/" ||
     window.location.pathname === "/Dok/") {
-    //get rs checkbox
-    let rsCheckbox: HTMLInputElement | null = document.querySelector("#MainContent_RsField input[type=checkbox]");
-    let teCheckbox: HTMLInputElement | null = document.querySelector("#MainContent_TeField input[type=checkbox]");
 
-    //get from settings, what to check/uncheck
-    //try to get settings
-    (async () => {
-      let standard = await getSetting("searchStandard", "TE");
-      if ((standard === "RS" || standard === "TERS")) {
-        if (rsCheckbox?.checked === false) {
-          rsCheckbox.click();
-        }
-      } else if (rsCheckbox?.checked === true) {
-        rsCheckbox.click();
-      }
-      if ((standard === "TE" || standard === "TERS")) {
-        if (teCheckbox?.checked === false) {
-          teCheckbox.click();
-        }
-      } else if (teCheckbox?.checked === true) {
-        teCheckbox.click();
-      }
-    })();
+    //get rs checkbox
+    let newRow = document.createElement("div");
+
+    const root = createRoot(newRow);
+    root.render(<StandardSearchSetter/>);
+    document.querySelector("body")?.append(newRow);
   }
 }
 
