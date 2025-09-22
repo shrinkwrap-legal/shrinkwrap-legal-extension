@@ -8,10 +8,13 @@ export function reverse(str: string): string {
 }
 
 export function harmonizeCourtCasing(str: string | null): string | null {
-  const allowedCourts = ["Justiz", "VwGH", "VfGH", "BVwG", "LVwG", "DSB", "GBK"];
+  const allowedCourts = ["Justiz", "VwGH", "VfGH", "BVwG", "LVwG", "DSB", "Dsk", "GBK"];
   let courts = allowedCourts.filter(c => c.toLowerCase() == str?.toLowerCase());
   if (courts.length == 0) {
     return null;
+  }
+  if (courts[0] === 'Dsk') {
+    courts = ['DSB'];
   }
   return courts[0];
 }
