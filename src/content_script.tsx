@@ -6,7 +6,6 @@ import {ShrinkwrapAnalysis} from "./components/ShrinkwrapRisResultAnalysis";
 import {harmonizeCourtCasing} from "./utils/string-utils";
 import {ShrinkwrapModal} from "./components/ShrinkwrapModal";
 import {ShrinkwrapModalInitial} from "./components/ShrinkwrapModalInitial";
-import {getSetting} from "./service/storage";
 import { StandardSearchSetter } from './components/StandardSearchSetter';
 
 
@@ -145,14 +144,3 @@ function appendModalInitial(document: Document) {
   console.log("appended modal");
 }
 
-/**
- * https://stackoverflow.com/questions/17799236/native-javascript-equivalent-of-jquery-contains-selector
- * @param selector element selector
- * @param text contains text
- */
-function contains(selector: string, text: string) {
-  const elements = document.querySelectorAll(selector);
-  return [].filter.call(elements, (element: any) => {
-    return RegExp(text).test(element.textContent);
-  });
-}
