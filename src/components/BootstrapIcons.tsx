@@ -14,13 +14,60 @@ export function RobotIcon() {
     )
 }
 
+export function CopyIcon() {
+  return (
+    <span title={'In Zwischenablage kopieren'}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        className="bi bi-copy"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"
+        />
+      </svg>
+    </span>
+  );
+}
+
+export function CopiedIcon() {
+  return (
+    <span title={'In Zwischenablage kopiert'}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        className="bi bi-check2-circle"
+        viewBox="0 0 16 16"
+      >
+        <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+        <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+      </svg>
+    </span>
+  );
+}
+
 export function EUIcon() {
-    return (
-        <span title={"EuGH-Vorlage"} className={"eu-icon"}>
-       <svg width="15" height="15" id="European flag" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            >
+  return (
+    <span title={'EuGH-Vorlage'} className={'eu-icon'}>
+      <svg
+        width="15"
+        height="15"
+        id="European flag"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <defs>
-        <polygon id="star" fill="#ffcc33" transform="scale(1.5)" points="0,-1
+          <polygon
+            id="star"
+            fill="#ffcc33"
+            transform="scale(1.5)"
+            points="0,-1
     0.224513988289792686220972575898763393789606,-0.309016994374947424102293417182819058860155
     0.951056516295153572116439333379382143405699,-0.309016994374947424102293417182819058860155
     0.363271264002680442947733378740309374808046,0.118033988749894848204586834365638117720309
@@ -29,26 +76,60 @@ export function EUIcon() {
     -0.587785252292473129168705954639072768597652,0.809016994374947424102293417182819058860155
     -0.363271264002680442947733378740309374808046,0.118033988749894848204586834365638117720309
     -0.951056516295153572116439333379382143405699,-0.309016994374947424102293417182819058860155
-    -0.224513988289792686220972575898763393789606,-0.309016994374947424102293417182819058860155"/>
-    </defs>
-    <rect width="15" height="15" fill="#003399"/>
-    <g transform="translate(7.5,7.5)">
-        <use xlinkHref="#star" transform="translate(0,-5)"/>
-        <use xlinkHref="#star" transform="rotate(30) translate(0,-5) rotate(-30)"/>
-        <use xlinkHref="#star" transform="rotate(60) translate(0,-5) rotate(-60)"/>
-        <use xlinkHref="#star" transform="rotate(90) translate(0,-5) rotate(-90)"/>
-        <use xlinkHref="#star" transform="rotate(120) translate(0,-5) rotate(-120)"/>
-        <use xlinkHref="#star" transform="rotate(150) translate(0,-5) rotate(-150)"/>
-        <use xlinkHref="#star" transform="rotate(180) translate(0,-5) rotate(-180)"/>
-        <use xlinkHref="#star" transform="rotate(210) translate(0,-5) rotate(-210)"/>
-        <use xlinkHref="#star" transform="rotate(240) translate(0,-5) rotate(-240)"/>
-        <use xlinkHref="#star" transform="rotate(270) translate(0,-5) rotate(-270)"/>
-        <use xlinkHref="#star" transform="rotate(300) translate(0,-5) rotate(-300)"/>
-        <use xlinkHref="#star" transform="rotate(330) translate(0,-5) rotate(-330)"/>
-    </g>
-</svg>
-        </span>
-    )
+    -0.224513988289792686220972575898763393789606,-0.309016994374947424102293417182819058860155"
+          />
+        </defs>
+        <rect width="15" height="15" fill="#003399" />
+        <g transform="translate(7.5,7.5)">
+          <use xlinkHref="#star" transform="translate(0,-5)" />
+          <use
+            xlinkHref="#star"
+            transform="rotate(30) translate(0,-5) rotate(-30)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(60) translate(0,-5) rotate(-60)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(90) translate(0,-5) rotate(-90)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(120) translate(0,-5) rotate(-120)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(150) translate(0,-5) rotate(-150)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(180) translate(0,-5) rotate(-180)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(210) translate(0,-5) rotate(-210)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(240) translate(0,-5) rotate(-240)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(270) translate(0,-5) rotate(-270)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(300) translate(0,-5) rotate(-300)"
+          />
+          <use
+            xlinkHref="#star"
+            transform="rotate(330) translate(0,-5) rotate(-330)"
+          />
+        </g>
+      </svg>
+    </span>
+  );
 }
 
 export function CodeSlashIcon() {
