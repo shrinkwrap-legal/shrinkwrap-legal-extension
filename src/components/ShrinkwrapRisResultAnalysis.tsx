@@ -4,7 +4,7 @@ import {
   CaseLawResponseDto,
   GetShrinkwrapDocumentParamsCourtEnum,
 } from '../api';
-import { RobotIcon, CodeSlashIcon } from './BootstrapIcons';
+import { RobotIcon, CodeSlashIcon, CopyIcon } from './BootstrapIcons';
 
 interface ShrinkwrapAnalysisProps {
     court: string;
@@ -43,6 +43,54 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             console.log(e)
         } finally {
             clearTimeout(timeout);
+        }
+    }
+
+    const copyToClipboard = async() => {
+        if (!caseData?.summary) return;
+
+        const sections = [
+            { heading: 'Sachverhalt', content: caseData.summary.sachverhalt },
+            { heading: 'Begehren', content: caseData.summary.begehren },
+            { heading: 'Gegenvorbringen', content: caseData.summary.gegenvorbringen },
+            { heading: 'Entscheidung', content: caseData.summary.entscheidung_gericht },
+            { heading: 'Schlussfolgerungen\n',
+                content: caseData.summary.schlussfolgerungen?.join('\n') || null
+            }
+        ];
+
+
+
+        const formattedText = sections
+            .map(({ heading, content }) => `${heading}: ${content}`)
+            .join('\n\n') +
+        '\n' + caseData.metadata?.url;
+
+        const fullText = `${caseData.summary.zeitungstitel_oeffentlich}\n\n${formattedText}\n\n`;
+
+        try {
+            // Create a ClipboardItem with both plain text and rich text (HTML)
+            const htmlContent = sections
+                .map(({ heading, content }) => {
+                    const headingText = heading.replace(/\*\*/g, '');
+                    return `<h3>${headingText}</h3><p>${content?.replace(/\n/g, '<br>')}</p>`;
+                })
+                .join('');
+
+            const fullHtml = `<h2>${caseData.summary.zeitungstitel_oeffentlich}</h2>${htmlContent}<br><p><a href="${caseData.metadata?.url}">Entscheidungstext zu ${caseData.metadata?.case_number} vom ${caseData.metadata?.decision_date} im RIS</a></p>`;
+
+            const blob = new Blob([fullHtml], { type: 'text/html' });
+            const textBlob = new Blob([fullText], { type: 'text/plain' });
+
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    'text/html': blob,
+                    'text/plain': textBlob
+                })
+            ]);
+        } catch (err) {
+            // Fallback to plain text if rich formatting fails
+            await navigator.clipboard.writeText(fullText);
         }
     }
 
@@ -171,8 +219,12 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                                 )}
                             </div>
                         ): (
+                          <div>
+                          <a onClick={copyToClipboard}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a> &middot;
                             <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails anzeigen</a>
-                            )}
+
+                          </div>
+                        )}
 
                     </div>)}
             </div>
