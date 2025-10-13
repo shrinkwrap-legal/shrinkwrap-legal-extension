@@ -71,7 +71,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             .map(({ heading, content }) => `${heading}: ${content}`)
             .join('\n\n');
 
-        const fullText = `(KI-generierte Zusammenfassung) ${caseData.summary.zeitungstitel_oeffentlich}\n\n${formattedText}\n\nEntscheidungstext des ${caseData.metadata?.court} zu ${caseData.metadata?.case_number} vom ${formattedDate} im RIS: ${caseData.metadata?.url}`;
+        const fullText = `(KI-generierte Zusammenfassung) ${caseData.summary.zeitungstitel_oeffentlich}\n\n${formattedText}\n\nEntscheidungstext: ${caseData.metadata?.court} zu ${caseData.metadata?.case_number} vom ${formattedDate} im RIS: ${caseData.metadata?.url}`;
 
         try {
             // Create a ClipboardItem with both plain text and rich text (HTML)
@@ -82,7 +82,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                 })
                 .join('');
 
-            const fullHtml = `(KI-generierte Zusammenfassung) <h2>${caseData.summary.zeitungstitel_oeffentlich}</h2>${htmlContent}<h3>Quelle</h3><p><a href="${caseData.metadata?.url}">Entscheidungstext des ${caseData.metadata?.court} zu ${caseData.metadata?.case_number} vom ${formattedDate} im RIS</a></p>`;
+            const fullHtml = `(KI-generierte Zusammenfassung) <h2>${caseData.summary.zeitungstitel_oeffentlich}</h2>${htmlContent}<h3>Quelle</h3><p><a href="${caseData.metadata?.url}">Entscheidungstext: ${caseData.metadata?.court} zu ${caseData.metadata?.case_number} vom ${formattedDate} im RIS</a></p>`;
 
             const blob = new Blob([fullHtml], { type: 'text/html' });
             const textBlob = new Blob([fullText], { type: 'text/plain' });
@@ -155,7 +155,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                             </dl>
                         </div>
                         {showDetails ? (
-                            <div>
+                            <div className={"mt-1"}>
                                 <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails ausblenden</a>
                                 <dl className="row mt-2">
                                     <dt className="col-sm-3">Titel (Variante 1)</dt>
@@ -236,7 +236,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                               <a onClick={copyToClipboard}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a>
                             )}
                             &ensp;&middot;&ensp;
-                            <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails anzeigen</a>
+                            <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails</a>
 
                           </div>
                         )}
