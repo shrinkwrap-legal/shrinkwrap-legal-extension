@@ -4,7 +4,7 @@ import {
   CaseLawResponseDto,
   GetShrinkwrapDocumentParamsCourtEnum,
 } from '../api';
-import { RobotIcon, CodeSlashIcon, CopyIcon } from './BootstrapIcons';
+import { RobotIcon, CodeSlashIcon, CopyIcon, CopiedIcon } from './BootstrapIcons';
 
 interface ShrinkwrapAnalysisProps {
     court: string;
@@ -17,6 +17,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
     const [isFetchingLonger, setIsFetchingLonger] = useState(false);
     const [caseData, setCaseData] = useState<CaseLawResponseDto | null>(null)
     const [showDetails, setShowDetails] = useState(false);
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         setIsFetching(true);
@@ -54,19 +55,23 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
             { heading: 'Begehren', content: caseData.summary.begehren },
             { heading: 'Gegenvorbringen', content: caseData.summary.gegenvorbringen },
             { heading: 'Entscheidung', content: caseData.summary.entscheidung_gericht },
-            { heading: 'Schlussfolgerungen\n',
+            { heading: 'Schlussfolgerungen',
                 content: caseData.summary.schlussfolgerungen?.join('\n') || null
             }
         ];
 
 
+        const formattedDate = ((new Date(caseData.metadata?.decision_date || '')).toLocaleDateString('de-DE', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit'
+        }));
 
         const formattedText = sections
             .map(({ heading, content }) => `${heading}: ${content}`)
-            .join('\n\n') +
-        '\n' + caseData.metadata?.url;
+            .join('\n\n');
 
-        const fullText = `${caseData.summary.zeitungstitel_oeffentlich}\n\n${formattedText}\n\n`;
+        const fullText = `(KI-generierte Zusammenfassung) ${caseData.summary.zeitungstitel_oeffentlich}\n\n${formattedText}\n\nEntscheidungstext des ${caseData.metadata?.court} zu ${caseData.metadata?.case_number} vom ${formattedDate} im RIS: ${caseData.metadata?.url}`;
 
         try {
             // Create a ClipboardItem with both plain text and rich text (HTML)
@@ -77,7 +82,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                 })
                 .join('');
 
-            const fullHtml = `<h2>${caseData.summary.zeitungstitel_oeffentlich}</h2>${htmlContent}<br><p><a href="${caseData.metadata?.url}">Entscheidungstext zu ${caseData.metadata?.case_number} vom ${caseData.metadata?.decision_date} im RIS</a></p>`;
+            const fullHtml = `(KI-generierte Zusammenfassung) <h2>${caseData.summary.zeitungstitel_oeffentlich}</h2>${htmlContent}<h3>Quelle</h3><p><a href="${caseData.metadata?.url}">Entscheidungstext des ${caseData.metadata?.court} zu ${caseData.metadata?.case_number} vom ${formattedDate} im RIS</a></p>`;
 
             const blob = new Blob([fullHtml], { type: 'text/html' });
             const textBlob = new Blob([fullText], { type: 'text/plain' });
@@ -88,6 +93,11 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                     'text/plain': textBlob
                 })
             ]);
+
+            setCopied(true);
+            setTimeout(() => {
+                setCopied(false);
+            }, 5000);
         } catch (err) {
             // Fallback to plain text if rich formatting fails
             await navigator.clipboard.writeText(fullText);
@@ -219,8 +229,13 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                                 )}
                             </div>
                         ): (
-                          <div>
-                          <a onClick={copyToClipboard}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a> &middot;
+                          <div className={"mt-1"}>
+                            {copied ? (
+                              <a onClick={copyToClipboard}><span className={"icon"}><CopiedIcon></CopiedIcon></span> Kopiert</a>
+                            ) : (
+                              <a onClick={copyToClipboard}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a>
+                            )}
+                            &ensp;&middot;&ensp;
                             <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails anzeigen</a>
 
                           </div>
