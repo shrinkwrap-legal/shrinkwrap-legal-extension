@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { getOnChangedListener, getSetting } from '../service/storage';
+import {
+  getOnChangedListener,
+  getSetting,
+  storeSetting,
+} from '../service/storage';
 
 export const StandardSearchSetter: React.FC = () => {
   const [searchStandard, setSearchStandard] = useState<string>('');
 
   useEffect(() => {
     function handleChange(changes: any, area: string) {
-      if (area === 'local' && changes) {
+      if (area === 'local' && changes &&
+        changes.searchStandard.newValue != changes.searchStandard.oldValue) {
+        storeSetting("manualSearchStandardSet", false);
         setSearchStandard(changes.searchStandard.newValue);
       }
     }
@@ -19,8 +25,29 @@ export const StandardSearchSetter: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    let timeout = setTimeout(() => {
+      storeSetting('manualSearchStandardSet', true);
+    },200);
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [])
+
+  useEffect(() => {
     getSetting('searchStandard', 'TE').then((value) => {
-      setSearchParams(value);
+      const url = new URL(window.location.href);
+      const urlParams = new URLSearchParams(url.searchParams);
+
+      //only change if not user-initated
+      //which is the case, if the page is initially
+      //loaded OR the initial page was opened
+      //for more than 200ms
+      getSetting("manualSearchStandardSet","").then((manualOverride) => {
+        if (!manualOverride || urlParams.get('WxeReturnToSelf') == null) {
+          storeSetting("manualSearchStandardSet", false);
+          setSearchParams(value);
+        }
+      });
     });
   }, [searchStandard]);
 
