@@ -10,7 +10,7 @@ export const StandardSearchSetter: React.FC = () => {
 
   useEffect(() => {
     function handleChange(changes: any, area: string) {
-      if (area === 'local' && changes &&
+      if (area === 'local' && changes && changes.searchStandard !== undefined &&
         changes.searchStandard.newValue != changes.searchStandard.oldValue) {
         storeSetting("manualSearchStandardSet", false);
         setSearchStandard(changes.searchStandard.newValue);

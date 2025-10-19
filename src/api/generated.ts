@@ -240,10 +240,10 @@ export interface JspPropertyGroupDescriptor {
   isXml?: string;
   includePreludes?: string[];
   includeCodas?: string[];
-  urlPatterns?: string[];
+  trimDirectiveWhitespaces?: string;
   errorOnUndeclaredNamespace?: string;
   deferredSyntaxAllowedAsLiteral?: string;
-  trimDirectiveWhitespaces?: string;
+  urlPatterns?: string[];
 }
 
 export interface RedirectView {
@@ -410,6 +410,24 @@ export type ServletContextEffectiveSessionTrackingModesEnum =
   | "SSL";
 
 export type GetShrinkwrapDocumentParamsCourtEnum =
+  | "Justiz"
+  | "VwGH"
+  | "VfGH"
+  | "BVwG"
+  | "LVwG"
+  | "DSB"
+  | "GBK";
+
+export type GetShrinkwrapDocumentByCourtAndDocNumberParamsCourtEnum =
+  | "Justiz"
+  | "VwGH"
+  | "VfGH"
+  | "BVwG"
+  | "LVwG"
+  | "DSB"
+  | "GBK";
+
+export type GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum =
   | "Justiz"
   | "VwGH"
   | "VfGH"
@@ -780,6 +798,29 @@ export class Api<
     ) =>
       this.request<CaseLawResponseDto, any>({
         path: `/api/case-law/shrinkwrap`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags case-law-controller
+     * @name GetShrinkwrapDocumentByCourtAndDocNumber
+     * @request GET:/api/case-law/shrinkwrap/{court}/{docNumber}
+     */
+    getShrinkwrapDocumentByCourtAndDocNumber: (
+      court: GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum,
+      docNumber: string,
+      query?: {
+        includePrompts?: boolean;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<CaseLawResponseDto, any>({
+        path: `/api/case-law/shrinkwrap/${court}/${docNumber}`,
         method: "GET",
         query: query,
         format: "json",

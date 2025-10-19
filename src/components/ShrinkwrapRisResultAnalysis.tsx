@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   api,
   CaseLawResponseDto,
+  GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum,
   GetShrinkwrapDocumentParamsCourtEnum,
 } from '../api';
 import { RobotIcon, CodeSlashIcon, CopyIcon, CopiedIcon } from './BootstrapIcons';
@@ -33,11 +34,9 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
         }, 4000)
         try {
             let response = await api
-                .getShrinkwrapDocument({
-                    docNumber: docNumber!,
-                    court: court! as GetShrinkwrapDocumentParamsCourtEnum,
-                    includePrompts: true
-                });
+              .getShrinkwrapDocumentByCourtAndDocNumber(court as GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum, docNumber, {
+                includePrompts: true,
+              })
             setIsFetching(false);
             setCaseData(response.data)
         } catch (e) {

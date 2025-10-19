@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {api, CaseLawResponseDto, GetShrinkwrapDocumentParamsCourtEnum} from "../api";
+import {
+  api,
+  CaseLawResponseDto,
+  GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum
+} from '../api';
 import { getReadTimeInMinutesFromWordcount } from "../utils/string-utils";
 import {EUIcon} from "./BootstrapIcons";
 import {getOnChangedListener, getSetting} from "../service/storage";
@@ -49,10 +53,7 @@ export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, 
         }, 4000)
         try {
             let response = await api
-                .getShrinkwrapDocument({
-                    docNumber: docNumber!,
-                    court: court! as GetShrinkwrapDocumentParamsCourtEnum,
-                });
+              .getShrinkwrapDocumentByCourtAndDocNumber(court as GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum, docNumber)
             setCaseData(response.data)
         } catch (e) {
             console.log(e)
