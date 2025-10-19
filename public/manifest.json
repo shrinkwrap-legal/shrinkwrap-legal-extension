@@ -3,7 +3,7 @@
 
   "name": "Shrinkwrap.legal",
   "description": "Gerichtsurteile, passend verpackt.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "default_locale": "de",
 
   "icons": {
