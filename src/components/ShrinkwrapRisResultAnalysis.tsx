@@ -155,6 +155,12 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                         </div>
                         {showDetails ? (
                             <div className={"mt-1"}>
+                              {copied ? (
+                                <a onClick={copyToClipboard}><span className={"icon"}><CopiedIcon></CopiedIcon></span> Kopiert</a>
+                              ) : (
+                                <a onClick={copyToClipboard}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a>
+                              )}
+                              &ensp;&middot;&ensp;
                                 <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails ausblenden</a>
                                 <dl className="row mt-2">
                                     <dt className="col-sm-3">Titel (Variante 1)</dt>
