@@ -5,8 +5,9 @@ import {
   GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum
 } from '../api';
 import { getReadTimeInMinutesFromWordcount } from "../utils/string-utils";
-import {EUIcon} from "./BootstrapIcons";
+import { EUIcon } from './BootstrapIcons';
 import {getOnChangedListener, getSetting} from "../service/storage";
+import { CaretDown, CaretRight } from 'react-bootstrap-icons';
 
 interface ShrinkwrapRowProps {
     court: string;
@@ -69,7 +70,10 @@ export const ShrinkwrapRow: React.FC<ShrinkwrapRowProps> = ({ court, docNumber, 
             <td colSpan={children} className={`shrinkwrapRow bocListDataCell ${showSummary ? ' showSummary' : ''}`}
                 onClick={() => setShowSummary(s => !s)}>
                 {caseData.wordCount && (<span style={{color: 'grey'}} title={caseData.wordCount + " Wörter"}>({Math.ceil(getReadTimeInMinutesFromWordcount(caseData.wordCount))} min.)&ensp;</span>)}
-                <span className="shrinkwrapTitle">
+              <span className="shrinkwrapTitle">
+                {caseData.summary && (
+                  <span className="caretIcon">{ showSummary ? (<CaretDown />) : (<CaretRight  />) }</span>
+                )}
                     {caseData.summary?.eugh && (<EUIcon></EUIcon>)}
                     {shortSummary(caseData, headline)}</span>
                 {showSummary && (

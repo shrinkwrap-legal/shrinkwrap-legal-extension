@@ -50,6 +50,10 @@ $theme-colors: map-merge($theme-colors, (
   div.shrinkwrapSummary {
     display: none;
   }
+
+  .caretIcon svg {
+    margin-bottom: -2px;
+  }
 }
 
 
