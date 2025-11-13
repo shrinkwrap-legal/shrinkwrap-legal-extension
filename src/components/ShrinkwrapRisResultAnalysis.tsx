@@ -19,6 +19,8 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
     const [caseData, setCaseData] = useState<CaseLawResponseDto | null>(null)
     const [showDetails, setShowDetails] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [copiedUserPrompt, setCopiedUserPrompt] = useState(false);
+    const [copiedSystemPrompt, setCopiedSystemPrompt] = useState(false);
 
     useEffect(() => {
         setIsFetching(true);
@@ -44,6 +46,27 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
         } finally {
             clearTimeout(timeout);
         }
+    }
+
+    const copyTextToClipboard = async(fullText :string, type:'system'|'user') => {
+      const textBlob = new Blob([fullText], { type: 'text/plain' });
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/plain': textBlob
+        })
+      ]);
+      if (type === 'system') {
+        setCopiedSystemPrompt(true);
+        setTimeout(() => {
+          setCopiedSystemPrompt(false);
+        }, 5000);
+      }
+      else if (type === 'user') {
+          setCopiedUserPrompt(true);
+          setTimeout(() => {
+            setCopiedUserPrompt(false);
+          }, 5000);
+      }
     }
 
     const copyToClipboard = async() => {
@@ -212,18 +235,34 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                                         {caseData.prompts?.model}
                                     </dd>
                                 </dl>
+                              {caseData.prompts?.system_prompt !== undefined && (
                                 <dl className="row mt-2">
                                     <dt className="col-sm-3">Verwendeter System Prompt</dt>
                                     <dd className="col-sm-9 prompt">
-                                        {caseData.prompts?.system_prompt}
+                                        {caseData.prompts.system_prompt}
+                                      <div className={"my-2"}>{copiedSystemPrompt ? (
+                                        <a onClick={() => copyTextToClipboard(caseData.prompts?.system_prompt ?? '', 'system')}><span className={"icon"}><CopiedIcon></CopiedIcon></span> Kopiert</a>
+                                      ) : (
+                                        <a onClick={() => copyTextToClipboard(caseData.prompts?.system_prompt ?? '', 'system')}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a>
+                                      )}
+                                      </div>
                                     </dd>
                                 </dl>
+                              )}
+                              {caseData.prompts?.user_prompt && (
                                 <dl className="row mt-2">
-                                    <dt className="col-sm-3">Verwendeter User Prompt</dt>
-                                    <dd className="col-sm-9 prompt">
-                                        {caseData.prompts?.user_prompt}
-                                    </dd>
+                                  <dt className="col-sm-3">Verwendeter User Prompt</dt>
+                                  <dd className="col-sm-9 prompt">
+                                    {caseData.prompts?.user_prompt}
+                                    <div className={"my-2"}>{copiedUserPrompt ? (
+                                      <a onClick={() => copyTextToClipboard(caseData.prompts?.user_prompt ?? '', 'user')}><span className={"icon"}><CopiedIcon></CopiedIcon></span> Kopiert</a>
+                                    ) : (
+                                      <a onClick={() => copyTextToClipboard(caseData.prompts?.user_prompt ?? '', 'user')}><span className={"icon"}><CopyIcon></CopyIcon></span> Kopieren</a>
+                                    )}
+                                    </div>
+                                  </dd>
                                 </dl>
+                              )}
                                 {caseData.prompts?.removed_from_prompt && (
                                     <dl className="row mt-2">
                                         <dt className="col-sm-3">Nicht verwendeter Inhalt</dt>
