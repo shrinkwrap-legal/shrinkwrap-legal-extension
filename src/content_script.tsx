@@ -19,6 +19,10 @@ function runShrinkwrapTasks() {
     const params = window.location.search;
     const urlParams = new URLSearchParams(params);
     let court = harmonizeCourtCasing(urlParams.get("Abfrage"));
+    if (court === null) {
+      //Gesamtabfrage, use shrinkwrap-added parameter when coming from search
+      court = harmonizeCourtCasing(urlParams.get('swAbfrage'));
+    }
     const docNumber = urlParams.get("Dokumentnummer");
     //court has to be correct casing
 
@@ -73,7 +77,7 @@ function runShrinkwrapTasks() {
         return url.pathname.startsWith("/Dokument.wxe");
       })
       .map((elem) => ({ element: elem, href: elem.href }));
-    console.log(elements);
+    //console.log(elements);
 
     //extract court and DokumentNummer
     elements.forEach((elem) => {
@@ -89,6 +93,9 @@ function runShrinkwrapTasks() {
         let courtFromRow = tableRow?.querySelector("acronym");
         if (courtFromRow) {
           court = harmonizeCourtCasing(courtFromRow?.textContent);
+          if (court !== null) {
+            elem.element.href += `&swAbfrage=${court}`;
+          }
         }
       }
 
