@@ -80,11 +80,22 @@ function runShrinkwrapTasks() {
       const url = new URL(elem.href, window.location.origin);
       const urlParams = new URLSearchParams(url.searchParams);
       let court = harmonizeCourtCasing(urlParams.get("Abfrage"));
-      if (court == null) { return; }
-
       const docNumber = urlParams.get("Dokumentnummer");
 
       let tableRow = elem?.element?.parentElement?.parentElement;
+
+      //Gesamtabfrage may be different
+      if (court === null && urlParams.get('Abfrage') === 'Gesamtabfrage') {
+        let courtFromRow = tableRow?.querySelector("acronym");
+        if (courtFromRow) {
+          court = harmonizeCourtCasing(courtFromRow?.textContent);
+        }
+      }
+
+      if (court == null) {
+        return;
+      }
+
       let children = tableRow?.querySelectorAll("td.bocListDataCell").length;
       if (tableRow && docNumber != null) {
         let newRow = document.createElement("tr");
