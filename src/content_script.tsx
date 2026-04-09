@@ -44,6 +44,7 @@ function runShrinkwrapTasks() {
           key={'analysis_' + court + '_' + docNumber}
           docNumber={docNumber}
           court={court}
+          mode={"info"}
         />,
       );
       contentElem.before(shrinkwrapElem);
@@ -56,7 +57,42 @@ function runShrinkwrapTasks() {
         //ecli: ecli?.trim(),
       });
     }
-  } else if (window.location.pathname === "/Ergebnis.wxe") {
+  } else if (window.location.pathname.startsWith("/Dokumente/")) {
+    //Dokumente/Justiz/JJT_20020625_OGH0002_0050OB00122_02F0000_000/JJT_20020625_OGH0002_0050OB00122_02F0000_000.html
+    let params = window.location.pathname.split("/");
+    let court = harmonizeCourtCasing(params[2]);
+    const docNumber = params[3];
+    console.log(`document ${docNumber} by court ${court}`);
+
+    if (court == null || docNumber == null) {
+      return;
+    }
+
+    //show info to user
+    //appendModal(document);
+    //does not work here with minimal RIS css
+
+    let contentElem = document.querySelector(
+      '.paperw, .paperw100, .paperh, .paperh100',
+    );
+    if (docNumber && contentElem) {
+      //load and prepend component to first document selector
+      let shrinkwrapElem = document.createElement('div');
+
+      const root = createRoot(shrinkwrapElem);
+      root.render(
+        <ShrinkwrapAnalysis
+          key={'analysis_' + court + '_' + docNumber}
+          docNumber={docNumber}
+          court={court}
+          mode={"print"}
+        />,
+      );
+      contentElem.before(shrinkwrapElem);
+    }
+  }
+
+  else if (window.location.pathname === "/Ergebnis.wxe") {
     console.log("hello RIS, it's shrinkwrap extracting search info");
     const searchParams = window.location.search;
     const searchUrlParams = new URLSearchParams(searchParams);

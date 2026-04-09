@@ -114,6 +114,17 @@ $theme-colors: map-merge($theme-colors, (
   border: 1px solid #67BCBD;
   margin-top: 0.5em;
 
+  &.shrinkwrapAnalysisBlockPrint {
+    width: 485.2pt;
+    margin-top: 5pt;
+    margin-right: 45.05pt;
+    margin-bottom: -60pt;
+    margin-left: 45.05pt;
+    font-size: 10.0pt;
+    @media print {
+      margin-bottom: 0;
+    }
+  }
 
   .shrinkwrapAnalysis {
     padding: 0.5em;

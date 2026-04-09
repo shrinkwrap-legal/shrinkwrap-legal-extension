@@ -5,14 +5,21 @@ import {
   GetShrinkwrapDocumentByCourtAndDocNumberParamsEnum,
   GetShrinkwrapDocumentParamsCourtEnum,
 } from '../api';
-import { RobotIcon, CodeSlashIcon, CopyIcon, CopiedIcon } from './BootstrapIcons';
+import {
+  RobotIcon,
+  CodeSlashIcon,
+  CopyIcon,
+  CopiedIcon,
+  CloseIcon,
+} from './BootstrapIcons';
 
 interface ShrinkwrapAnalysisProps {
     court: string;
     docNumber: string;
+    mode: "print" | "info"
 }
 
-export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, docNumber}) => {
+export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, docNumber, mode}) => {
     const [showSummary, setShowSummary] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
     const [isFetchingLonger, setIsFetchingLonger] = useState(false);
@@ -128,7 +135,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
 
     return (
         <div>{(isFetching || caseData) && (
-            <div className={'shrinkwrapAnalysisBlock'}>
+            <div className={`shrinkwrapAnalysisBlock ${mode === "print" ? "shrinkwrapAnalysisBlockPrint" : ""}`}>
                 {isFetching && (<div className={'shrinkwrapLoading'}><div className={'indeterminate-progress-bar' + (isFetchingLonger ? ' indeterminate-progress-bar-almost-done' : '')}>
                     {isFetchingLonger && (<div className="info-text-container">Entscheidungszusammenfassung wird generiert...</div>)}
                     <div className="indeterminate-progress-bar__progress"></div></div></div>)}
@@ -282,6 +289,8 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                             &ensp;&middot;&ensp;
                             <a onClick={() => setShowDetails(s => !s)}><span className="icon"><CodeSlashIcon></CodeSlashIcon></span> Entwicklerdetails</a>
 
+                            &ensp;&middot;&ensp;
+                            <a onClick={() => setCaseData(null)}><span className={"icon"}><CloseIcon></CloseIcon></span> Schließen</a>
                           </div>
                         )}
 
