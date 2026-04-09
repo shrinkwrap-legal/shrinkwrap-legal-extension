@@ -143,9 +143,9 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                 {caseData && caseData.summary && (
                     <div className={`shrinkwrapAnalysis `}>
                         <div>
+                            <div className={"ai-logo-container"}><RobotIcon></RobotIcon></div>
                             {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
                             <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
-                            <div className={"ai-logo-container"}><RobotIcon></RobotIcon></div>
                         </div>
                         <div className="mt-3">
                             <dl className="row">

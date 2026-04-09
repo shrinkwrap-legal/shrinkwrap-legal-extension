@@ -124,6 +124,14 @@ $theme-colors: map-merge($theme-colors, (
     @media print {
       margin-bottom: 0;
     }
+
+    a {
+      color: #305886;
+    }
+
+    dd {
+      margin-left: 0;
+    }
   }
 
   .shrinkwrapAnalysis {
