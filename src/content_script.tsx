@@ -179,8 +179,15 @@ if (host === "www.ris.bka.gv.at" || host === "ris.bka.gv.at") {
 }
 
 function appendModal(document: Document) {
+  //check if modal already exists
+  let shrinkwrapModal = document.getElementById("shrinkwrapModal");
+  if (shrinkwrapModal !== null) {
+    return;
+  }
+
   //show Modal if still wanted by user
-  let shrinkwrapModal = document.createElement("div");
+  shrinkwrapModal = document.createElement("div");
+  shrinkwrapModal.id = "shrinkwrapModal";
   shrinkwrapModal.style.width = "100%";
   const shrinkwrapModalRoot = createRoot(shrinkwrapModal);
   shrinkwrapModalRoot.render(<ShrinkwrapModal/>);
