@@ -177,8 +177,8 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                             <dl className="row mt-2">
                                 <dt className="col-sm-3">Schlussfolgerungen</dt>
                                 <dd className="col-sm-9">
-                                    {caseData.summary?.schlussfolgerungen?.map((absatz) => (
-                                        <div className={"mt-1"}>{absatz}</div>
+                                    {caseData.summary?.schlussfolgerungen?.map((absatz, index) => (
+                                        <div key={`schlussfolgerung-${index}`} className={"mt-1"}>{absatz}</div>
                                     ))}
                                 </dd>
                             </dl>
@@ -213,8 +213,8 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                                 <dl className="row mt-2">
                                     <dt className="col-sm-3">Zusammenfassung</dt>
                                     <dd className="col-sm-9">
-                                        {caseData.summary?.zusammenfassung_3_absaetze?.map((absatz) => (
-                                            <div className={"mt-1"}>{absatz}</div>
+                                        {caseData.summary?.zusammenfassung_3_absaetze?.map((absatz, index) => (
+                                            <div key={`zusammenfassung-${index}`} className={"mt-1"}>{absatz}</div>
                                         ))}
                                     </dd>
                                 </dl>
