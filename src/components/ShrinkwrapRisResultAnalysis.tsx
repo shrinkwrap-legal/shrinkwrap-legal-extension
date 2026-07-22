@@ -6,7 +6,7 @@ import {
   GetShrinkwrapDocumentParamsCourtEnum,
 } from '../api';
 import {
-  RobotIcon,
+  AiIcon,
   CodeSlashIcon,
   CopyIcon,
   CopiedIcon,
@@ -143,7 +143,7 @@ export const ShrinkwrapAnalysis: React.FC<ShrinkwrapAnalysisProps> = ({ court, d
                 {caseData && caseData.summary && (
                     <div className={`shrinkwrapAnalysis `}>
                         <div>
-                            <div className={"ai-logo-container"}><RobotIcon></RobotIcon></div>
+                            <div className={"ai-logo-container"}><AiIcon></AiIcon></div>
                             {caseData.wordCount && (<span style={{color: 'grey'}}>({caseData.wordCount.toLocaleString('de')} Wörter)&ensp;</span>)}
                             <span className="shrinkwrapTitle">{caseData.summary?.zeitungstitel_oeffentlich}</span>
                         </div>
