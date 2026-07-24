@@ -1,18 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import {
-  getOnChangedListener,
-  getSetting,
-  storeSetting,
-} from '../service/storage';
+import { getOnChangedListener, getSetting } from '../service/storage';
+
+/**
+ * In the judicature tab, RIS renders the checkboxes for Rechtsatz and
+ * Entscheidung as AutoPostBack controls, so every click - ours
+ * or the user's - triggers a full page reload. We must not re-apply the default
+ * when the reload was caused by a manual toggle, otherwise we would fight the
+ * user. sessionStorage survives the postback reload (and is scoped to the tab),
+ * and we consume the marker on the next load so a later *fresh* navigation to
+ * the search page still applies the configured default.
+ */
+const USER_TOGGLED_KEY = 'shrinkwrapUserToggledDocType';
+
+const readMarker = (): boolean => {
+  try {
+    return sessionStorage.getItem(USER_TOGGLED_KEY) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+const setMarker = (value: boolean) => {
+  try {
+    if (value) {
+      sessionStorage.setItem(USER_TOGGLED_KEY, 'true');
+    } else {
+      sessionStorage.removeItem(USER_TOGGLED_KEY);
+    }
+  } catch {
+    /* sessionStorage may be unavailable; degrade gracefully */
+  }
+};
 
 export const StandardSearchSetter: React.FC = () => {
   const [searchStandard, setSearchStandard] = useState<string>('');
 
+  // React to the user changing the default in the extension options.
   useEffect(() => {
     function handleChange(changes: any, area: string) {
       if (area === 'local' && changes && changes.searchStandard !== undefined &&
         changes.searchStandard.newValue != changes.searchStandard.oldValue) {
-        storeSetting("manualSearchStandardSet", false);
+        // An explicit options change should always win over a previous manual toggle.
+        setMarker(false);
         setSearchStandard(changes.searchStandard.newValue);
       }
     }
@@ -25,31 +54,43 @@ export const StandardSearchSetter: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    let timeout = setTimeout(() => {
-      storeSetting('manualSearchStandardSet', true);
-    },200);
-    return () => {
-      clearTimeout(timeout);
-    }
-  }, [])
-
-  useEffect(() => {
     getSetting('searchStandard', 'TE').then((value) => {
-      const url = new URL(window.location.href);
-      const urlParams = new URLSearchParams(url.searchParams);
+      // Always listen for real user toggles so we can respect them across the
+      // AutoPostBack reload they trigger.
+      attachUserToggleListeners();
 
-      //only change if not user-initated
-      //which is the case, if the page is initially
-      //loaded OR the initial page was opened
-      //for more than 200ms
-      getSetting("manualSearchStandardSet","").then((manualOverride) => {
-        if (!manualOverride || urlParams.get('WxeReturnToSelf') == null) {
-          storeSetting("manualSearchStandardSet", false);
-          setSearchParams(value);
+      if (readMarker()) {
+        // The previous load was caused by a manual checkbox click: respect it,
+        // but consume the marker so the next fresh navigation applies the default.
+        setMarker(false);
+        return;
+      }
+
+      setSearchParams(value);
+    });
+  }, [searchStandard]);
+
+  /**
+   * Record a marker whenever the human toggles a document-type checkbox, so the
+   * ensuing AutoPostBack reload does not get overridden. Our own programmatic
+   * clicks are `isTrusted === false` and are ignored here.
+   */
+  const attachUserToggleListeners = () => {
+    const checkboxes = document.querySelectorAll<HTMLInputElement>(
+      '#MainContent_RsField input[type=checkbox], #MainContent_TeField input[type=checkbox]',
+    );
+    checkboxes.forEach((checkbox) => {
+      if (checkbox.dataset.swToggleListener === 'true') {
+        return;
+      }
+      checkbox.dataset.swToggleListener = 'true';
+      checkbox.addEventListener('click', (event) => {
+        if (event.isTrusted) {
+          setMarker(true);
         }
       });
     });
-  }, [searchStandard]);
+  };
 
   /**
    * Set fields in RIS form based on the settings
