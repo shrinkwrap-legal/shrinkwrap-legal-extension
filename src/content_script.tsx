@@ -12,7 +12,9 @@ import { StandardSearchSetter } from './components/StandardSearchSetter';
 function runShrinkwrapTasks() {
   //const ecli = getEcliFromContent();
 
-  if (window.location.pathname === "/Dokument.wxe") {
+  if (window.location.pathname === "/Dokument.wxe" ||
+    window.location.pathname === "/JudikaturEntscheidung.wxe" ||
+    window.location.pathname === "/JustizEntscheidung.wxe") {
     console.log("hello RIS, it's shrinkwrap extracting doc info");
 
     // extract court from search url
