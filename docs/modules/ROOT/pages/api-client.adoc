@@ -1,0 +1,31 @@
+= API-Client
+
+Der Zugriff auf die xref:api::rest-api.adoc[REST-API] erfolgt über einen aus der OpenAPI-Spezifikation
+generierten TypeScript-Client in `src/api/generated.ts`. `src/api/api.ts` instanziiert ihn mit `API_BASE_URL`.
+
+== Generierung
+
+[source,bash]
+----
+# gegen eine lokal laufende API (http://localhost:8080)
+npm run generate-api
+
+# gegen die Produktiv-API
+npm run generate-api-remote
+----
+
+Beide Skripte rufen `swagger-typescript-api` mit `--extract-enums --generate-union-enums` auf und
+überschreiben `src/api/generated.ts`. Nach Änderungen an der API neu generieren und committen.
+
+== Verwendung
+
+[source,typescript]
+----
+import { api } from './api';
+
+// in RIS eingeblendete Komponenten (ShrinkwrapRisResultRow, ShrinkwrapRisResultAnalysis)
+await api.getShrinkwrapDocumentByCourtAndDocNumber(court, docNumber);
+
+// Side Panel (Hook useShrinkwrapDocument, React Query)
+await api.getShrinkwrapDocument({ court, docNumber, ecli });
+----

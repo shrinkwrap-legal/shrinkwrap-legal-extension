@@ -1,0 +1,6 @@
+name: extension
+title: Shrinkwrap.Legal Extension
+version: ~
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

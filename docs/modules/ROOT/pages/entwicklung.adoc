@@ -1,0 +1,72 @@
+= Entwicklung
+
+== Voraussetzungen
+
+* Node.js 22.x
+* npm
+
+== Build
+
+[source,bash]
+----
+npm install
+
+# Entwicklung gegen lokale API (http://localhost:8080), mit Watch
+npm run watch
+
+# Entwicklung gegen die Produktiv-API
+npm run watch-remote            # Chrome
+npm run watch-remote-firefox    # Firefox
+
+# Produktions-Build
+npm run build                   # Chrome/Edge
+npm run build-firefox           # Firefox
+
+npm run clean                   # dist/ löschen
+----
+
+Das Ergebnis liegt in `dist/`.
+
+== Browserspezifisches Manifest
+
+`public/manifest.json` enthält gemeinsame und browserspezifische Schlüssel. Schlüssel mit Präfix
+`__chrome__` bzw. `__firefox__` werden beim Build abhängig von `TARGET_BROWSER` übernommen (Präfix entfernt)
+oder verworfen. Beispiele:
+
+[cols="1,2,2"]
+|===
+| Aspekt | Chrome | Firefox
+
+| Seitenleiste | `side_panel` | `sidebar_action`
+| Background | `service_worker` | `scripts`
+| Permissions | `storage`, `sidePanel` | `storage`
+| ID | – | `extension@shrinkwrap.legal` (`browser_specific_settings.gecko`)
+|===
+
+== Extension laden
+
+Chrome/Edge::
+. `chrome://extensions` bzw. `edge://extensions` öffnen
+. „Entwicklermodus“ aktivieren
+. „Entpackte Erweiterung laden“ und `dist/` auswählen
+
+Firefox::
+. `about:debugging#/runtime/this-firefox` öffnen
+. „Temporäres Add-on laden“ und `dist/manifest.json` auswählen
+
+== Tests und Codestil
+
+[source,bash]
+----
+npm test          # Jest, Tests unter src/__tests__/
+npm run style     # Prettier (semi, singleQuote)
+----
+
+== Continuous Integration
+
+GitHub Actions (`.github/workflows/build.yml`) baut bei jedem Push mit Node 22 sowohl die Chrome- als auch
+die Firefox-Variante und lädt sie als Artefakte `extension` und `extension-firefox` hoch.
+
+== Versionierung
+
+Die Version wird in `package.json` und `public/manifest.json` synchron gepflegt (aktuell `0.1.15`).

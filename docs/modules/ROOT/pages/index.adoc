@@ -1,0 +1,57 @@
+= Shrinkwrap.Legal Browser-Extension
+
+Frontend des Shrinkwrap.Legal-Projekts: Die Extension blendet KI-generierte Zusammenfassungen von
+Gerichtsentscheidungen direkt in das Rechtsinformationssystem des Bundes (https://ris.bka.gv.at[RIS]) ein –
+in Trefferlisten und auf Dokumentseiten. Die Daten stammen aus der xref:api::index.adoc[Shrinkwrap.Legal API].
+
+Die Architektur des Gesamtsystems ist in der xref:ROOT::index.adoc[arc42-Dokumentation] beschrieben.
+
+== Technologie
+
+[cols="1,3"]
+|===
+| Plattform | WebExtension, Manifest V3; Chrome/Edge und Firefox aus einer Codebasis
+| Sprache | TypeScript
+| UI | React 18, React-Bootstrap / Bootstrap 5.3, Bootstrap Icons, SCSS
+| Datenzugriff | TanStack React Query, aus OpenAPI generierter Client (`swagger-typescript-api`)
+| Build | Webpack 5 (`webpack.common.js`, `webpack.dev.js`, `webpack.prod.js`), `dotenv-webpack`
+| Tests | Jest mit ts-jest
+| Lizenz | GNU AGPL v3.0
+|===
+
+== Bestandteile
+
+[cols="1,1,3"]
+|===
+| Einstiegspunkt | Datei | Aufgabe
+
+| Content Script | `src/content_script.tsx` | Wird auf `ris.bka.gv.at` geladen, erkennt den Seitentyp und rendert React-Komponenten in die RIS-Seite (siehe xref:ris-integration.adoc[])
+| Background | `src/background.ts` | Service Worker (Chrome) bzw. Background Script (Firefox): öffnet das Side Panel per Klick auf das Icon, zeigt nach der Installation eine Begrüßungsseite
+| Side Panel | `src/Sidepanel.tsx` | Seitenleiste mit Einstellungen (Überschrift in Trefferlisten, Standardsuche) und Infos zum aktuellen Dokument
+| Options | `src/Options.tsx` | Optionsseite der Extension
+|===
+
+Weitere Verzeichnisse:
+
+* `src/components/` – React-Komponenten (z. B. `ShrinkwrapRisResultAnalysis`, `ShrinkwrapRisResultRow`, `ShrinkwrapModal`)
+* `src/hooks/useShrinkwrapDocument.ts` – lädt die Zusammenfassung über die API (React Query)
+* `src/service/storage.ts` – Zugriff auf `storage.local` (browserübergreifend via `webextension-polyfill`)
+* `src/api/` – generierter API-Client
+* `src/_locales/de/` – Übersetzungen
+* `public/` – Manifest, HTML-Seiten, Icons
+
+== Kommunikation
+
+[mermaid]
+....
+flowchart LR
+  RIS["RIS-Seite<br/>ris.bka.gv.at"] -->|DOM| CS[Content Script]
+  CS -->|"runtime.sendMessage<br/>court, docNumber"| SP[Side Panel]
+  CS -->|"HTTPS GET<br/>/api/case-law/shrinkwrap/:court/:docNumber"| API[Shrinkwrap.Legal API]
+  SP -->|"HTTPS GET<br/>/api/case-law/shrinkwrap?court=…&docNumber=…"| API
+  CS & SP -->|storage.local| ST[(Einstellungen)]
+....
+
+== Repository
+
+https://github.com/shrinkwrap-legal/shrinkwrap-legal-extension

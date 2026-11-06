@@ -1,0 +1,38 @@
+= RIS-Integration
+
+Das Content Script wird auf `https://ris.bka.gv.at/*` und `https://www.ris.bka.gv.at/*` geladen und
+entscheidet anhand der URL, was eingeblendet wird.
+
+[cols="2,3"]
+|===
+| RIS-Seite | Verhalten
+
+| Trefferliste `/Ergebnis.wxe`
+| Für jeden Link auf eine Entscheidung (`/Dokument.wxe`) werden Gericht (`Abfrage`) und `Dokumentnummer`
+  ermittelt und eine zusätzliche Tabellenzeile (`ShrinkwrapRow`) mit der Zusammenfassung eingefügt.
+  Bei der Gesamtabfrage wird das Gericht aus der Tabellenzeile gelesen und als `swAbfrage` an den Link angehängt.
+  Bei Volltextsuche erscheint ggf. der Info-Dialog.
+
+| Dokument `/Dokument.wxe`, `/JudikaturEntscheidung.wxe`, `/JustizEntscheidung.wxe`
+| Über dem Dokument wird die Analyse (`ShrinkwrapAnalysis`, Modus `info`) eingefügt. Gericht und
+  Dokumentnummer werden per `runtime.sendMessage` an das Side Panel gemeldet.
+
+| Druck-/HTML-Ansicht `/Dokumente/<Gericht>/<Dokumentnummer>/…`
+| Analyse im Modus `print` über dem Dokumentinhalt.
+
+| Suchmasken `/Jus/`, `/Vfgh/`, `/Vwgh/`, `/Bvwg/`, `/Lvwg/`, `/Dsk/`, `/Dok/`, Justiz-Judikatur-Tab
+| `StandardSearchSetter` setzt den bevorzugten Dokumenttyp (Einstellung `searchStandard`).
+
+| URL mit `#shrinkwrap`
+| Zeigt den Einführungsdialog (`ShrinkwrapModalInitial`).
+|===
+
+Gerichtsbezeichnungen werden mit `harmonizeCourtCasing` (`src/utils/string-utils.ts`) auf die Schreibweise
+der API (`Justiz`, `VwGH`, `VfGH`, `BVwG`, `LVwG`, `DSB`, `GBK`) gebracht; unbekannte Gerichte werden ignoriert.
+
+[NOTE]
+====
+Die Integration hängt von der DOM-Struktur des RIS ab (z. B. `.document`, `td.bocListDataCell`, `.paperw`).
+Änderungen am RIS können Anpassungen erfordern – siehe auch
+xref:ROOT::11_technical_risks.adoc[Risiken und technische Schulden].
+====
